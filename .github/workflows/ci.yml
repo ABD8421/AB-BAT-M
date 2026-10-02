@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least privilege by default (spec §57). Jobs that need more must ask for it.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install (lockfile only)
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://ab-bat.vercel.app
+
+# Notes:
+# - No secret is referenced here, so a fork PR cannot reach one.
+# - Never `echo` an environment variable in a step; CI logs are retained.
+# - Turn on GitHub secret scanning and Dependabot in repository settings.

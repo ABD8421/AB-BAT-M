@@ -1,0 +1,32 @@
+# dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# builds
+.next/
+out/
+build/
+dist/
+
+# secrets — never commit
+.env
+.env.local
+.env.development.local
+.env.staging.local
+.env.production
+.env.production.local
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+secrets/
+
+# misc
+.DS_Store
+*.log
+.vercel
+*.tsbuildinfo
+coverage/

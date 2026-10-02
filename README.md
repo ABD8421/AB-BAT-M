@@ -285,7 +285,7 @@ it up.
 
 1. Push to GitHub. Confirm `.env.local` is **not** in the repository.
 2. Import into Vercel. Set `NEXT_PUBLIC_SITE_URL` to the real domain — the
-   deployed origin is `https://ab-bat.vercel.app`. If it is unset in production
+   deployed origin is ``. If it is unset in production
    the code falls back to that origin rather than to localhost.
 3. Add server-side variables per environment: `GITHUB_USERNAME` (already
    defaulted to `ABD8421` in `data/site.ts`), optionally `GITHUB_TOKEN`
@@ -327,5 +327,6 @@ the call is one `fetch` in the route handler.
   404 and the server stays healthy; the log line is framework-internal.
 - Light mode is implemented as a token swap and passes contrast by calculation,
   but it has not been reviewed visually.
-#   A B - B A T - M  
+#   A B - B A T - M 
+ 
  
