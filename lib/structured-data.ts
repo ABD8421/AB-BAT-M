@@ -1,5 +1,6 @@
 import { site } from "@/data/site";
 import { skills } from "@/data/skills";
+import { isPlaceholderText } from "@/lib/utils";
 
 /**
  * Person structured data (spec §47).
@@ -7,8 +8,9 @@ import { skills } from "@/data/skills";
  * filtered out rather than published as broken `sameAs` entries.
  */
 export function buildPersonJsonLd(): string {
-  const sameAs = [site.links.github, site.links.linkedin, site.links.x]
-    .filter((url) => url && !/^\[.*\]$/.test(url));
+  const sameAs = [site.links.github, site.links.linkedin, site.links.x].filter(
+    (url) => url && !isPlaceholderText(url),
+  );
 
   const data = {
     "@context": "https://schema.org",

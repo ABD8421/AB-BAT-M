@@ -53,7 +53,13 @@ const securityHeaders = [
     value: "max-age=63072000; includeSubDomains; preload",
   },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-  { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
+  // same-site, not same-origin: these are the deployment's own subresources,
+  // and requiring an exact origin match makes the browser block every script,
+  // stylesheet and image when the site is reached through a preview alias
+  // (vercel.app URLs are siblings under the same registrable domain, not the
+  // same origin). Nothing here is meant to be embedded cross-site —
+  // frame-ancestors 'none' is what actually prevents that.
+  { key: "Cross-Origin-Resource-Policy", value: "same-site" },
   { key: "X-DNS-Prefetch-Control", value: "on" },
 ];
 
