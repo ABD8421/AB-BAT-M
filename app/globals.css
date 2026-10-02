@@ -519,8 +519,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   opacity: 0.85;
 }
 
-/* Batman Logo around Batweb & Sonar Radar (replaces dark blocks) */
-.atmos__batweb {
+/* Radar grid + rangefinder watermark behind the page content. */
+.atmos__radar {
   position: absolute;
   left: 50%;
   top: 40%;
@@ -533,17 +533,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: opacity 0.5s var(--ease);
 }
 
-.atmos__batweb-svg {
+.atmos__radar-svg {
   width: 100%;
   height: 100%;
   overflow: visible;
   filter: drop-shadow(0 0 24px rgb(227 178 60 / 14%));
 }
 
-.atmos__batman-logo {
+.atmos__sigil {
   transform-origin: 500px 500px;
   filter: drop-shadow(0 0 16px var(--signal));
-  opacity: 0.85;
+  opacity: 0.32;
 }
 
 .atmos__sonar-ring {

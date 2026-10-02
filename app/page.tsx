@@ -13,6 +13,9 @@ import { Contact } from "@/components/contact/Contact";
  * The home page is the full narrative (spec §77). Deep content — case studies,
  * résumé, terminal — lives on its own routes so it can be linked and indexed
  * independently.
+ *
+ * The page stays statically prerendered; the GitHub panel inside it revalidates
+ * hourly through the cache window set in lib/github.ts.
  */
 export default function HomePage() {
   return (

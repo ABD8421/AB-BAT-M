@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { THEME_STORAGE_KEY } from "@/lib/theme";
 
 type Theme = "dark" | "light";
 
-/** Theme state lives on <html data-theme>. public/theme-init.js sets it pre-paint. */
+/** Theme state lives on <html data-theme>, set pre-paint by lib/theme.ts. */
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("dark");
 
@@ -18,7 +19,7 @@ export function ThemeToggle() {
     setTheme(next);
     document.documentElement.setAttribute("data-theme", next);
     try {
-      localStorage.setItem("theme", next);
+      localStorage.setItem(THEME_STORAGE_KEY, next);
     } catch {
       /* Storage can be blocked. The toggle still works for this session. */
     }

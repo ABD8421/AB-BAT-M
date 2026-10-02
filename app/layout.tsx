@@ -10,6 +10,7 @@ import { Footer } from "@/components/footer/Footer";
 import { Shortcuts } from "@/components/navigation/Shortcuts";
 import { site } from "@/data/site";
 import { buildPersonJsonLd } from "@/lib/structured-data";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 /**
  * SEO defaults (spec §47).
@@ -71,16 +72,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         {/* Applies the saved/system theme before first paint (no flash).
             Inlined as head markup — rather than an external <script src> or
-            next/script — because the preview harness injects its own inline
-            script into <head>, and reconciling that against an external src
-            script produced a hydration mismatch. The CSP allows inline
-            scripts via 'unsafe-inline' (see next.config.ts). */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              'try{var s=localStorage.getItem("theme");var t=s==="light"||s==="dark"?s:(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","dark")}',
-          }}
-        />
+            next/script — so it runs without a second render-blocking request,
+            and because the preview harness injects its own inline script into
+            <head>, which reconciling against an external src script turned
+            into a hydration mismatch. The CSP allows inline scripts via
+            'unsafe-inline' (see next.config.ts); the source is single-sourced
+            in lib/theme.ts so it cannot drift from the toggle. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <script
           type="application/ld+json"
           // Static, build-time JSON produced from local data — no user input

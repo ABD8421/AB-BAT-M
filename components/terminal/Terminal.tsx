@@ -92,7 +92,11 @@ export function Terminal() {
       return;
     }
 
-    const command = COMMANDS[input.toLowerCase()];
+    const name = input.toLowerCase();
+    // Own-property lookup only: a bare `COMMANDS[name]` also matches inherited
+    // Object.prototype members, so "constructor" would resolve to a function
+    // and return a non-string into the log, which crashes the render.
+    const command = Object.hasOwn(COMMANDS, name) ? COMMANDS[name] : undefined;
     setLines((current) => [
       ...current,
       { kind: "in", text: `> ${input}` },

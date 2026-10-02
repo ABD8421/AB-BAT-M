@@ -8,6 +8,12 @@ import { site } from "@/data/site";
  * - Works without a token (60 requests/hour, unauthenticated).
  * - Never throws. A failure returns { ok: false } and the UI degrades.
  * - Cached for an hour so a visitor spike cannot exhaust the rate limit.
+ *
+ * Keeping this cache is what lets the home page stay statically prerendered:
+ * swapping it for `cache: "no-store"` would make the whole route dynamic and
+ * re-render on every request. The cost of the hour is bounded and honest —
+ * if GitHub is unreachable when the page regenerates, the fallback panel is
+ * what gets cached, and the next revalidation replaces it.
  */
 
 const API = "https://api.github.com";
