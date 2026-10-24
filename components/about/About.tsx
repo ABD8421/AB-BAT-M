@@ -32,8 +32,7 @@ export function About() {
                 position: "relative",
                 overflow: "hidden",
                 borderRadius: "var(--radius)",
-                border: "1px solid var(--edge-strong)",
-                background: "var(--graphite)",
+                border: "1px solid var(--edge)",
               }}
             >
               <Image
@@ -44,23 +43,6 @@ export function About() {
                 style={{ objectFit: "cover", objectPosition: "center top" }}
                 priority
               />
-              <div className="casefile__cover-scanline" />
-              <span
-                style={{
-                  position: "absolute",
-                  bottom: "8px",
-                  left: "8px",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.68rem",
-                  letterSpacing: "0.14em",
-                  color: "var(--signal)",
-                  background: "rgba(6, 7, 10, 0.8)",
-                  padding: "2px 6px",
-                  borderRadius: "2px",
-                }}
-              >
-                EXHIBIT // PHOTOGRAPHIC RECORD
-              </span>
             </div>
 
             <div className="casefile__meta" style={{ margin: 0 }}>
