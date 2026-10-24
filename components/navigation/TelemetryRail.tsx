@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 
 /**
- * The signature element: a fixed left rail that reads out scroll depth like a
- * system gauge. Desktop only (>=1100px, see globals.css) and purely decorative,
- * so it is hidden from assistive technology.
+ * Tactical Telemetry Rail.
+ *
+ * Fixed left rail reading out scroll depth, elevation, and Gotham coordinates.
+ * Desktop only (>=1100px) and purely decorative (inert to assistive tech).
  */
 export function TelemetryRail() {
   const [percent, setPercent] = useState(0);
@@ -22,11 +23,11 @@ export function TelemetryRail() {
 
   return (
     <aside className="rail" aria-hidden="true">
-      <span className="rail__label">Batcomputer</span>
+      <span className="rail__label">GOTHAM RECON // 40.71° N</span>
       <div className="rail__track">
         <span className="rail__thumb" />
       </div>
-      <span className="rail__readout">{String(percent).padStart(3, "0")}%</span>
+      <span className="rail__readout">{String(percent).padStart(3, "0")}% DEPTH</span>
     </aside>
   );
 }

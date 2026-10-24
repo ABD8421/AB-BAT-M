@@ -24,8 +24,9 @@ interface Line {
 }
 
 const BANNER: Line[] = [
-  { kind: "out", text: "BATCOMPUTER TERMINAL v1.0 — read-only interface" },
-  { kind: "out", text: "Type 'help' for available commands." },
+  { kind: "out", text: "BATCOMPUTER TACTICAL RECON v2.4 — Gotham Detective Interface" },
+  { kind: "out", text: "Telemetry: 40.7128° N, 74.0060° W | Clearance: Level 4" },
+  { kind: "out", text: "Type 'help' to query intelligence registers or clear to purge buffer." },
 ];
 
 const COMMANDS: Record<string, () => string> = {
@@ -107,7 +108,17 @@ export function Terminal() {
   }
 
   return (
-    <div className="terminal" onClick={() => inputRef.current?.focus()}>
+    <div className="terminal panel--hud panel--casefile" onClick={() => inputRef.current?.focus()}>
+      <div className="casefile__header" style={{ padding: "0.6rem 0.8rem", borderBottom: "1px solid var(--edge)", background: "var(--void)" }}>
+        <span className="casefile__stamp">
+          <span className="casefile__stamp-dot" />
+          BATCOMPUTER TACTICAL RECON SHELL // PORT 443
+        </span>
+        <span className="casefile__status" data-status="verified">
+          FEED SECURE
+        </span>
+      </div>
+
       <div className="terminal__out" ref={outputRef} role="log" aria-live="polite" aria-label="Terminal output">
         {lines.map((line, index) => (
           <pre key={index} className="terminal__line" data-kind={line.kind}>{line.text}</pre>

@@ -23,9 +23,16 @@ export function TechNetwork() {
   });
 
   return (
-    <figure className="panel panel--hud" style={{ marginTop: "var(--space-4)" }}>
-      <figcaption className="meta" style={{ marginBottom: "0.75rem" }}>
-        Technology network // primary systems
+    <figure className="panel panel--hud panel--casefile" style={{ marginTop: "var(--space-4)" }}>
+      <div className="casefile__header" style={{ marginBottom: "0.5rem" }}>
+        <span className="casefile__stamp">
+          <span className="casefile__stamp-dot" />
+          SYSTEM TOPOLOGY // RADAR MATRIX
+        </span>
+        <span className="casefile__status" data-status="verified">ONLINE</span>
+      </div>
+      <figcaption className="meta" style={{ marginBottom: "0.75rem", color: "var(--steel)" }}>
+        Tactical technology lattice // nodal architecture
       </figcaption>
       <svg viewBox="0 0 500 360" width="100%" role="img" aria-label={`Technology network: ${NODES.join(", ")}`}>
         <g stroke="currentColor" opacity="0.18">

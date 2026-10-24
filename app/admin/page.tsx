@@ -573,13 +573,14 @@ export default function AdminDashboardPage() {
             padding: "0.75rem 1rem",
             marginBottom: "1.5rem",
             borderRadius: "4px",
-            background: alert.type === "ok" ? "rgba(0, 255, 170, 0.15)" : "rgba(255, 60, 60, 0.15)",
-            border: alert.type === "ok" ? "1px solid rgba(0, 255, 170, 0.4)" : "1px solid rgba(255, 60, 60, 0.4)",
-            color: alert.type === "ok" ? "var(--accent)" : "#ff6b6b",
+            background: alert.type === "ok" ? "rgb(229 169 60 / 15%)" : "rgba(224, 82, 82, 0.15)",
+            border: alert.type === "ok" ? "1px solid rgb(229 169 60 / 40%)" : "1px solid rgba(224, 82, 82, 0.4)",
+            color: alert.type === "ok" ? "var(--signal)" : "var(--alert)",
             fontSize: "0.9rem",
+            fontFamily: "var(--font-mono)",
           }}
         >
-          {alert.msg}
+          [DISPATCH] {alert.msg}
         </div>
       )}
 
@@ -704,9 +705,9 @@ export default function AdminDashboardPage() {
                       style={{
                         fontSize: "0.8rem",
                         padding: "0.3rem 0.7rem",
-                        background: sec.enabled ? "rgba(0, 255, 170, 0.2)" : "rgba(255, 255, 255, 0.1)",
-                        color: sec.enabled ? "var(--accent)" : "var(--text-muted)",
-                        border: "1px solid " + (sec.enabled ? "rgba(0,255,170,0.4)" : "rgba(255,255,255,0.2)"),
+                        background: sec.enabled ? "rgb(229 169 60 / 18%)" : "rgba(255, 255, 255, 0.05)",
+                        color: sec.enabled ? "var(--signal)" : "var(--text-dim)",
+                        border: "1px solid " + (sec.enabled ? "rgb(229 169 60 / 45%)" : "var(--edge)"),
                       }}
                       onClick={() => toggleSectionStatus(sec.id, sec.enabled)}
                     >
@@ -1227,7 +1228,7 @@ export default function AdminDashboardPage() {
                   <select
                     value={projectForm.category}
                     onChange={(e) => setProjectForm({ ...projectForm, category: e.target.value as ProjectCategory })}
-                    style={{ background: "#0b0d13", color: "var(--text)", border: "1px solid rgba(255,255,255,0.2)", padding: "0.5rem", borderRadius: "4px" }}
+                    style={{ background: "var(--slab)", color: "var(--bone)", border: "1px solid var(--edge)", padding: "0.5rem", borderRadius: "var(--radius)" }}
                   >
                     <option value="web">Web</option>
                     <option value="mobile">Mobile</option>

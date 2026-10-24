@@ -5,12 +5,12 @@ import { Mark } from "@/components/ui/Mark";
 import { site } from "@/data/site";
 
 const LINES = [
-  "System initialising",
-  "Gotham network",
-  "Secure connection",
-  "Batcomputer online",
-  "Loading developer profile",
-  "System ready",
+  "Gotham telemetry link // online",
+  "Calibrating Batcomputer sensor grid",
+  "Decrypting central case archives",
+  "Synchronizing forensic telemetry",
+  "Loading detective personnel profile",
+  "System armed // Case Management ready",
 ];
 
 const STEP_MS = 190;
@@ -67,7 +67,7 @@ export function BootSequence() {
       <div className="boot__bar">
         <span className="boot__fill" style={{ width: `${((index + 1) / LINES.length) * 100}%` }} />
       </div>
-      <p className="meta">{site.name}</p>
+      <p className="meta">{site.name} // 40.7128° N, 74.0060° W</p>
     </div>
   );
 }

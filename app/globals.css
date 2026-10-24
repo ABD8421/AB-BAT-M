@@ -6,23 +6,28 @@
 
 /* --- 1. TOKENS ----------------------------------------------------------- */
 :root {
-  /* Palette — Gotham night. Six values, no more. */
-  --void: #06070a;
-  --slab: #0b0d11;
-  --graphite: #14171d;
-  --bone: #e7e9ec;
-  --haze: #8b929c;
-  --signal: #e3b23c;      /* muted gold. Accent only — never a surface. */
+  /* Palette — Gotham Noir Detective System. Cool steel, cold graphite, Bat-Signal amber. */
+  --void: #050608;
+  --slab: #0a0d14;
+  --graphite: #121620;
+  --bone: #e2e6ee;
+  --steel: #909bb0;
+  --haze: #5c6676;
+  --signal: #e5a93c;      /* Bat-Signal amber gold. High-priority actions and clearance markers. */
+  --signal-bright: #f0b746;
   --alert: #b8453a;
 
   --surface: var(--slab);
   --surface-raised: var(--graphite);
   --text: var(--bone);
-  --text-dim: var(--haze);
-  --edge: rgb(255 255 255 / 7%);
-  --edge-strong: rgb(255 255 255 / 14%);
-  --signal-soft: rgb(227 178 60 / 12%);
-  --shadow: 0 24px 60px -32px rgb(0 0 0 / 90%);
+  --text-dim: var(--steel);
+  --edge: rgb(255 255 255 / 7.5%);
+  --edge-strong: rgb(255 255 255 / 15%);
+  --edge-signal: rgb(229 169 60 / 30%);
+  --signal-soft: rgb(229 169 60 / 12%);
+  --signal-glow: 0 0 20px rgb(229 169 60 / 22%);
+  --blueprint-grid: rgba(144, 155, 176, 0.045);
+  --shadow: 0 24px 60px -32px rgb(0 0 0 / 92%);
 
   /* Type. System stacks: zero network requests, zero layout shift, zero
      licensing risk. See README for swapping in next/font. */
@@ -157,6 +162,61 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .section:first-of-type { border-top: none; }
 
+/* Blueprint Axis Line across section borders with crosshair ticks */
+.section__blueprint-axis {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--edge) 15%, var(--edge-signal) 50%, var(--edge) 85%, transparent 100%);
+  pointer-events: none;
+}
+.section__blueprint-axis::before {
+  content: "+";
+  position: absolute;
+  left: 2rem;
+  top: -7px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--signal);
+  opacity: 0.65;
+}
+.section__blueprint-axis::after {
+  content: "+";
+  position: absolute;
+  right: 2rem;
+  top: -7px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--signal);
+  opacity: 0.65;
+}
+
+.section__coord-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--signal);
+  background: var(--signal-soft);
+  padding: 0.12rem 0.45rem;
+  border-radius: 2px;
+  border: 1px solid rgba(229, 169, 60, 0.22);
+  display: inline-block;
+  user-select: none;
+}
+
+.section__index-badge {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--edge);
+  background: color-mix(in srgb, var(--surface) 65%, transparent);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+}
+
 .section__head {
   display: flex;
   flex-wrap: wrap;
@@ -221,6 +281,268 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .panel--hud::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; }
 .panel--hud::after { bottom: -1px; right: -1px; border-bottom: 1px solid; border-right: 1px solid; }
+
+/* Investigation Casefile Dossier with 45° angular chamfer corners */
+.panel--casefile {
+  position: relative;
+  background: linear-gradient(175deg, color-mix(in srgb, var(--surface) 92%, transparent) 0%, color-mix(in srgb, var(--void) 90%, transparent) 100%);
+  border: 1px solid var(--edge);
+  border-radius: 3px;
+  clip-path: polygon(
+    0 8px,
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.panel--casefile:hover {
+  border-color: var(--signal);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.9), 0 0 20px -4px rgb(229 169 60 / 18%);
+}
+
+.casefile__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.65rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--edge);
+}
+
+.casefile__stamp {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--signal);
+  text-transform: uppercase;
+}
+
+.casefile__stamp-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 6px var(--signal);
+}
+
+.casefile__status {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+  border: 1px solid var(--edge);
+  color: var(--text-dim);
+}
+
+.casefile__status[data-status="completed"],
+.casefile__status[data-status="verified"] {
+  border-color: rgba(229, 169, 60, 0.4);
+  color: var(--signal);
+  background: var(--signal-soft);
+}
+
+.casefile__status[data-status="in-progress"] {
+  border-color: rgba(66, 153, 225, 0.4);
+  color: #63b3ed;
+  background: rgba(66, 153, 225, 0.1);
+}
+
+.casefile__cover {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #040507;
+  border: 1px solid var(--edge);
+  margin-bottom: 0.85rem;
+}
+
+.casefile__cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease);
+}
+
+.casefile__cover:hover .casefile__cover-img {
+  transform: scale(1.03);
+}
+
+.casefile__cover-scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.45) 51%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.casefile__cover-badge {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--signal);
+  background: rgba(6, 7, 10, 0.85);
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid rgba(229, 169, 60, 0.3);
+}
+
+.casefile__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--haze);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.tag--tactical {
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--steel);
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.tag--tactical:hover {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+.meta--tactical {
+  color: var(--signal);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  margin-bottom: 0.4rem;
+}
+
+/* Case Progression Timeline */
+.timeline--caseprogression {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.entry--caselog {
+  position: relative;
+  border: 1px solid var(--edge);
+  background: var(--surface);
+  border-radius: 3px;
+  transition: border-color 0.25s var(--ease);
+}
+
+.entry--caselog:hover,
+.entry--caselog[open] {
+  border-color: var(--signal);
+}
+
+.entry--caselog .entry__summary {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.entry--caselog .entry__summary::-webkit-details-marker {
+  display: none;
+}
+
+.entry__node-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.entry__node-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 6px var(--signal);
+}
+
+.entry__stamp-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 140px;
+}
+
+.entry__case-id {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--signal);
+  text-transform: uppercase;
+}
+
+.entry__title-group {
+  flex: 1;
+}
+
+.entry__title-group .entry__role {
+  font-weight: 700;
+  color: var(--bone);
+  font-size: 1.05rem;
+}
+
+.entry__title-group .entry__org {
+  color: var(--steel);
+  font-size: 0.88rem;
+}
+
+.entry__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--signal);
+  border: 1px solid rgba(229, 169, 60, 0.3);
+  padding: 0.25rem 0.55rem;
+  border-radius: 2px;
+}
+
+.entry__toggle-icon {
+  font-size: 0.65rem;
+  transition: transform 0.25s var(--ease);
+}
+
+.entry[open] .entry__toggle-icon {
+  transform: rotate(180deg);
+}
+
+.entry--caselog .entry__detail {
+  padding: 0 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
 .meta {
   font-family: var(--font-mono);
@@ -422,6 +744,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   height: 1px;
   background: var(--signal);
 }
+.nav__sec-num {
+  font-size: 0.65rem;
+  opacity: 0.45;
+  margin-right: 0.35rem;
+  color: var(--signal);
+  letter-spacing: 0.08em;
+}
+.nav__link:hover .nav__sec-num,
+.nav__link[aria-current="true"] .nav__sec-num {
+  opacity: 1;
+}
 
 .nav__actions { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
 @media (min-width: 1024px) { .nav__actions { margin-left: 0; } }
@@ -508,78 +841,55 @@ ul { margin: 0; padding: 0; list-style: none; }
   overflow: hidden;
 }
 
-/* The Dark Knight Tumbler Batmobile & Batman backdrop */
-.atmos__darkknight {
+/* Atmospheric Bat-Signal Spotlight Beam */
+.atmos__spotlight-beam {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.atmos__darkknight-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 72% 38%;
-  opacity: 0.52;
-  filter: contrast(1.15) brightness(0.85) saturate(0.9);
-  transition: opacity 0.5s var(--ease), transform 0.8s var(--ease);
-}
-
-[data-theme="light"] .atmos__darkknight-img {
-  opacity: 0.16;
-  filter: contrast(1.1) brightness(1.1) grayscale(0.65);
-}
-
-/* Multi-layered cinematic vignette & gradient fading into the page void */
-.atmos__darkknight-vignette {
-  position: absolute;
-  inset: 0;
+  top: -12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(110vw, 1200px);
+  height: min(100vh, 850px);
   background:
-    linear-gradient(to right, var(--void) 0%, color-mix(in srgb, var(--void) 88%, transparent) 38%, color-mix(in srgb, var(--void) 45%, transparent) 70%, var(--void) 100%),
-    linear-gradient(to bottom, var(--void) 0%, transparent 18%, transparent 65%, var(--void) 100%),
-    radial-gradient(ellipse 95% 85% at 75% 45%, transparent 25%, var(--void) 90%);
-}
-
-/* Amber headlight & heat glow matching the Tumbler */
-.atmos__darkknight-spotlight {
-  position: absolute;
-  right: 18%;
-  top: 50%;
-  width: min(50vw, 500px);
-  height: min(35vw, 300px);
-  border-radius: 50%;
-  background: radial-gradient(circle at center, rgb(227 178 60 / 14%) 0%, transparent 70%);
-  filter: blur(50px);
-  mix-blend-mode: screen;
+    radial-gradient(ellipse 65% 50% at 50% 25%, rgb(229 169 60 / 12%) 0%, transparent 68%),
+    conic-gradient(from 168deg at 50% -10%, transparent 0deg, rgb(229 169 60 / 7%) 15deg, rgb(229 169 60 / 12%) 22deg, transparent 38deg);
+  filter: blur(48px);
   pointer-events: none;
-  opacity: 0.8;
+  opacity: 0.85;
+  transition: opacity 0.5s var(--ease);
 }
 
-@media (max-width: 1024px) {
-  .atmos__darkknight-img {
-    object-position: 65% 35%;
-    opacity: 0.42;
-  }
-  .atmos__darkknight-vignette {
-    background:
-      linear-gradient(to right, var(--void) 0%, color-mix(in srgb, var(--void) 82%, transparent) 50%, var(--void) 100%),
-      linear-gradient(to bottom, var(--void) 0%, transparent 15%, transparent 65%, var(--void) 100%),
-      radial-gradient(ellipse 90% 80% at 65% 45%, transparent 15%, var(--void) 85%);
-  }
+[data-theme="light"] .atmos__spotlight-beam {
+  opacity: 0.15;
 }
 
-@media (max-width: 640px) {
-  .atmos__darkknight-img {
-    object-position: 60% 30%;
-    opacity: 0.35;
-  }
-  .atmos__darkknight-spotlight {
-    display: none;
-  }
+/* Gotham Detective Blueprint Coordinate Grid */
+.atmos__blueprint {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 40%, black 25%, transparent 85%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Corner Telemetry Coordinates */
+.atmos__coords {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: var(--haze);
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+}
+.atmos__coords--tl { top: 5.5rem; left: 1.5rem; }
+.atmos__coords--br { bottom: 1.5rem; right: 1.5rem; }
+@media (max-width: 1100px) {
+  .atmos__coords { display: none; }
 }
 
 .atmos__glow {
@@ -876,4 +1186,5 @@ details[open] .entry__toggle { color: var(--signal); }
   }
   .reveal { opacity: 1; transform: none; }
   .atmos__rain { display: none; }
+  .panel--casefile:hover { transform: none !important; }
 }

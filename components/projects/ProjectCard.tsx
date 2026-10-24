@@ -4,72 +4,78 @@ import { Unverified } from "@/components/ui/Unverified";
 import { externalLinkProps } from "@/lib/utils";
 
 const STATUS_LABEL: Record<Project["status"], string> = {
-  completed: "Completed",
-  "in-progress": "In progress",
-  archived: "Archived",
-  concept: "Concept",
+  completed: "CASE RESOLVED",
+  "in-progress": "ACTIVE INQUIRY",
+  archived: "ARCHIVED RECORD",
+  concept: "TACTICAL CONCEPT",
 };
 
-/** Case file card with optional cover image preview */
+/**
+ * Case file card styled as a Gotham detective investigation dossier.
+ */
 export function ProjectCard({ project }: { project: Project }) {
+  const caseId = project.caseNumber ? String(project.caseNumber).padStart(3, "0") : "001";
+
   return (
-    <article className="panel panel--hud card" style={{ overflow: "hidden" }}>
+    <article className="panel panel--hud panel--casefile card">
+      {/* Evidence dossier header bar */}
+      <div className="casefile__header">
+        <div className="casefile__stamp">
+          <span className="casefile__stamp-dot" />
+          <span className="casefile__stamp-label">EVIDENCE FILE #{caseId}</span>
+        </div>
+        <span className="casefile__status" data-status={project.status}>
+          {STATUS_LABEL[project.status] || project.status.toUpperCase()}
+        </span>
+      </div>
+
       {project.cover?.src && (
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "180px",
-            marginBottom: "1rem",
-            borderRadius: "4px",
-            overflow: "hidden",
-            background: "rgba(0,0,0,0.4)",
-            border: "1px solid rgba(255,255,255,0.08)",
-          }}
-        >
+        <div className="casefile__cover">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={project.cover.src}
             alt={project.cover.alt || project.title}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transition: "transform 0.4s ease",
-            }}
+            className="casefile__cover-img"
           />
+          <div className="casefile__cover-scanline" />
+          <span className="casefile__cover-badge">EXHIBIT A // IMAGE ARTIFACT</span>
         </div>
       )}
 
-      <header style={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}>
-        <p className="card__num">Case file #{project.caseNumber || "00"}</p>
-        <p className="meta" style={{ margin: 0 }}>{STATUS_LABEL[project.status] || project.status}</p>
-      </header>
+      <div className="casefile__meta">
+        <span className="casefile__coord">
+          LOC: GOTHAM // SECTOR-{(project.category || "web").toUpperCase()}
+        </span>
+        <span className="casefile__year">YEAR: {project.year}</span>
+      </div>
 
       <h3 className="card__title">
         <Unverified value={project.title} />
       </h3>
       <p className="card__text">{project.summary}</p>
 
+      {/* Forensic tech tags */}
       <ul className="card__tags">
         {project.tech.slice(0, 5).map((tech) => (
-          <li key={tech} className="tag">{tech}</li>
+          <li key={tech} className="tag tag--tactical">
+            {tech}
+          </li>
         ))}
       </ul>
 
       <div className="card__actions">
-        <Link href={`/projects/${project.slug}`} className="btn">
-          View case
+        <Link href={`/projects/${project.slug}`} className="btn btn--primary">
+          Examine Case
           <span aria-hidden="true">→</span>
         </Link>
         {project.links.live ? (
           <a href={project.links.live} className="btn btn--ghost" {...externalLinkProps}>
-            Live demo
+            Live Signal
           </a>
         ) : null}
         {project.links.repo ? (
           <a href={project.links.repo} className="btn btn--ghost" {...externalLinkProps}>
-            Source
+            Evidence Source
           </a>
         ) : null}
       </div>

@@ -51,25 +51,34 @@ export default function AdminLoginPage() {
       }}
     >
       <div
-        className="panel panel--hud"
+        className="panel panel--hud panel--casefile"
         style={{
-          maxWidth: "460px",
+          maxWidth: "480px",
           width: "100%",
           padding: "2.5rem 2rem",
-          background: "var(--surface, #0b0d13)",
-          border: "1px solid var(--accent, #00ffaa)",
-          boxShadow: "0 0 35px rgba(0, 255, 170, 0.15)",
-          borderRadius: "8px",
+          background: "var(--graphite)",
+          border: "1px solid var(--edge-strong)",
+          boxShadow: "0 0 35px rgb(229 169 60 / 12%)",
         }}
       >
+        <div className="casefile__header" style={{ marginBottom: "1.5rem" }}>
+          <span className="casefile__stamp">
+            <span className="casefile__stamp-dot" />
+            CLEARANCE PROTOCOL // L-01
+          </span>
+          <span className="casefile__status" data-status="verified">
+            RESTRICTED
+          </span>
+        </div>
+
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <div style={{ margin: "0 auto 1rem", display: "inline-block" }}>
             <Mark className="nav__mark" />
           </div>
-          <p className="eyebrow" style={{ color: "var(--accent)" }}>SECURITY CLEARANCE // LEVEL 1</p>
-          <h1 style={{ fontSize: "1.75rem", margin: "0.25rem 0 0.5rem" }}>SuperAdmin Console</h1>
-          <p className="meta" style={{ margin: 0 }}>
-            Enter your authorized Gmail ID and master password to access system modifications.
+          <p className="eyebrow" style={{ color: "var(--signal)" }}>SECURITY CLEARANCE // LEVEL 1</p>
+          <h1 style={{ fontSize: "1.75rem", margin: "0.25rem 0 0.5rem", color: "var(--bone)" }}>SuperAdmin Console</h1>
+          <p className="meta" style={{ margin: 0, color: "var(--steel)" }}>
+            Enter authorized Gmail ID and master cipher to access system management.
           </p>
         </div>
 
@@ -77,21 +86,22 @@ export default function AdminLoginPage() {
           <div
             style={{
               padding: "0.75rem 1rem",
-              background: "rgba(255, 60, 60, 0.15)",
-              border: "1px solid rgba(255, 60, 60, 0.4)",
-              color: "#ff6b6b",
-              borderRadius: "4px",
-              fontSize: "0.85rem",
+              background: "rgba(224, 82, 82, 0.12)",
+              border: "1px solid rgba(224, 82, 82, 0.35)",
+              color: "var(--alert)",
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.82rem",
               marginBottom: "1.5rem",
+              letterSpacing: "0.04em",
             }}
           >
-            {error}
+            [SECURITY ALERT] {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
           <div className="field" style={{ marginBottom: "1rem" }}>
-            <label htmlFor="admin-email">Gmail ID / SuperAdmin Email</label>
+            <label htmlFor="admin-email">Authorized Gmail ID / SuperAdmin Email</label>
             <input
               id="admin-email"
               type="email"
@@ -103,7 +113,7 @@ export default function AdminLoginPage() {
           </div>
 
           <div className="field" style={{ marginBottom: "1.5rem" }}>
-            <label htmlFor="admin-password">Master Password</label>
+            <label htmlFor="admin-password">Master Cipher / Password</label>
             <input
               id="admin-password"
               type="password"
@@ -113,7 +123,7 @@ export default function AdminLoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <p className="meta" style={{ margin: "0.4rem 0 0", fontSize: "0.75rem" }}>
+            <p className="meta" style={{ margin: "0.4rem 0 0", fontSize: "0.75rem", color: "var(--haze)" }}>
               Default initial master password: <code>admin123</code>
             </p>
           </div>
@@ -121,16 +131,16 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             className="btn btn--primary"
-            style={{ width: "100%", padding: "0.75rem" }}
+            style={{ width: "100%", padding: "0.75rem", justifyContent: "center" }}
             disabled={loading}
           >
-            {loading ? "Authenticating Clearance…" : "Authorize & Enter Console"}
+            {loading ? "Authenticating Clearance…" : "Authorize & Access Console"}
           </button>
         </form>
 
-        <div style={{ textAlign: "center", marginTop: "2rem", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "1rem" }}>
-          <Link href="/" className="meta" style={{ textDecoration: "underline" }}>
-            ← Return to public website
+        <div style={{ textAlign: "center", marginTop: "2rem", borderTop: "1px solid var(--edge)", paddingTop: "1rem" }}>
+          <Link href="/" className="meta" style={{ textDecoration: "underline", color: "var(--steel)" }}>
+            ← Return to public console
           </Link>
         </div>
       </div>

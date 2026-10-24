@@ -5,19 +5,20 @@ import { skills } from "@/data/skills";
 import { certificates } from "@/data/certificates";
 
 /**
- * Hero (spec §12–§16).
+ * Gotham Detective Case-Management Hero.
  *
- * The statistics are COUNTED FROM THE DATA FILES, never hard-coded. If a number
- * looks small, the fix is to add real work — not to type a bigger number
- * (spec §14, §74).
+ * Tactical developer profile featuring:
+ *   - Coordinate telemetry header & evidence classification stamps
+ *   - Case-number counter telemetry from live data
+ *   - Personnel investigation dossier card with biometric scan telemetry
  */
 export function Hero() {
   const verifiedCerts = certificates.filter((c) => !c.placeholder).length;
   const stats = [
-    { value: `${projects.length}`, label: "Case files" },
-    { value: `${skills.length}`, label: "Technologies" },
+    { value: `${projects.length}`, label: "Active Cases" },
+    { value: `${skills.length}`, label: "Systems & Stack" },
     ...(verifiedCerts > 0
-      ? [{ value: `${verifiedCerts}`, label: "Certifications" }]
+      ? [{ value: `${verifiedCerts}`, label: "Clearances" }]
       : []),
   ];
 
@@ -25,7 +26,12 @@ export function Hero() {
     <section id="home" className="hero" aria-labelledby="hero-title">
       <div className="shell hero__grid">
         <div>
-          <p className="eyebrow">Batcomputer // Developer profile</p>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
+            <p className="eyebrow">Case Management System // Personnel Profile</p>
+            <span className="section__coord-tag">
+              [COORD: 40.71° N, 74.00° W]
+            </span>
+          </div>
 
           <h1 id="hero-title" className="hero__title">
             <span>Abdullah</span>
@@ -37,7 +43,7 @@ export function Hero() {
 
           <ul className="hero__stack">
             {site.stackLine.map((item) => (
-              <li key={item} className="tag">
+              <li key={item} className="tag tag--tactical">
                 {item}
               </li>
             ))}
@@ -45,13 +51,14 @@ export function Hero() {
 
           <div className="hero__actions">
             <Link href="#projects" className="btn btn--primary">
-              View my work
+              Examine Cases
+              <span aria-hidden="true">→</span>
             </Link>
             <Link href="/resume" className="btn">
-              Download CV
+              Download Dossier
             </Link>
             <Link href="#contact" className="btn btn--ghost">
-              Contact me
+              Dispatch Signal
             </Link>
           </div>
 
@@ -74,46 +81,49 @@ export function Hero() {
   );
 }
 
-/** Batcomputer identity card (spec §16). */
+/** Gotham detective personnel dossier card */
 function IdentityCard() {
   return (
     <article
-      className="panel panel--hud dossier"
-      aria-label="Developer profile card"
+      className="panel panel--hud panel--casefile dossier"
+      aria-label="Detective Personnel Dossier Card"
     >
       <div className="dossier__bar">
-        <span className="meta">Developer profile</span>
-        <span className="meta">ID // AAA-01</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+          <span className="casefile__stamp-dot" />
+          <span className="meta">[ PERSONNEL DOSSIER ]</span>
+        </div>
+        <span className="meta" style={{ color: "var(--signal)" }}>CLEARANCE // LVL-1</span>
       </div>
-      <div className="dossier__scan" aria-hidden="true" />
+
+      <div className="dossier__scan" aria-hidden="true">
+        <span className="dossier__scan-beam" />
+      </div>
+
       <dl className="dossier__body">
         <div className="dossier__row">
           <dt>Identity</dt>
           <dd>{site.name}</dd>
         </div>
         <div className="dossier__row">
-          <dt>Role</dt>
+          <dt>Specialization</dt>
           <dd>{site.role}</dd>
         </div>
         <div className="dossier__row">
-          <dt>Primary systems</dt>
+          <dt>Primary Systems</dt>
           <dd>{site.focus}</dd>
         </div>
         <div className="dossier__row">
-          <dt>Location</dt>
+          <dt>Field Sector</dt>
           <dd>{site.location}</dd>
         </div>
         <div className="dossier__row">
-          <dt>Tactical Unit</dt>
-          <dd>The Dark Knight Tumbler // Active</dd>
-        </div>
-        <div className="dossier__row">
-          <dt>Status</dt>
+          <dt>Surveillance</dt>
           <dd>
             {site.availability.open ? (
               <span className="status-dot">{site.availability.label}</span>
             ) : (
-              <span className="meta">Not currently available</span>
+              <span className="meta">Standby status</span>
             )}
           </dd>
         </div>

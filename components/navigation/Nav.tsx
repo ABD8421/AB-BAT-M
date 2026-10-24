@@ -144,7 +144,7 @@ export function Nav() {
           </Link>
 
           <nav className="nav__list" aria-label="Sections">
-            {sections.map((section) => (
+            {sections.map((section, idx) => (
               <Link
                 key={section.id}
                 href={href(section.id)}
@@ -153,7 +153,8 @@ export function Nav() {
                   isHome && active === section.id ? "true" : undefined
                 }
               >
-                {section.label}
+                <span className="nav__sec-num">{String(idx + 1).padStart(2, "0")}</span>
+                <span>{section.label}</span>
               </Link>
             ))}
           </nav>

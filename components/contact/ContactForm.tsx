@@ -8,7 +8,7 @@ type Status = "idle" | "sending" | "sent" | "error";
 const EMPTY = { name: "", email: "", subject: "", message: "", website: "" };
 
 /**
- * Contact form with direct mailing capabilities & session autofill.
+ * Gotham detective contact form with direct mailing capabilities & session autofill.
  */
 export function ContactForm() {
   const [values, setValues] = useState(EMPTY);
@@ -42,7 +42,7 @@ export function ContactForm() {
     setErrors(result.errors);
     if (!result.ok || !result.data) {
       setStatus("error");
-      setNotice("Check the highlighted fields and try again.");
+      setNotice("Attention: Correct highlighted fields and re-transmit.");
       return;
     }
 
@@ -72,29 +72,36 @@ export function ContactForm() {
 
       setErrors(payload.errors ?? {});
       setStatus("error");
-      setNotice(payload.message ?? "The message could not be sent. Try again in a moment.");
+      setNotice(payload.message ?? "Transmission rejected. Check coordinates and retry.");
     } catch {
       setStatus("error");
-      setNotice("The network request failed. Check your connection and try again.");
+      setNotice("Signal loss: Network failed to reach dispatch console.");
     }
   }
 
   const directMailto = `mailto:abdullahalanser@gmail.com?subject=${encodeURIComponent(
-    values.subject || "Portfolio Inquiry"
+    values.subject || "Gotham Transmission Inquiry"
   )}&body=${encodeURIComponent(
     `From: ${values.name} (${values.email})\n\n${values.message}`
   )}`;
 
   if (status === "sent") {
     return (
-      <div className="panel panel--hud sent" role="status">
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-          <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", background: "var(--accent)" }} />
-          <h3 style={{ margin: 0 }}>Direct Transmission Received</h3>
+      <div className="panel panel--hud panel--casefile sent" role="status">
+        <div className="casefile__header">
+          <span className="casefile__stamp">
+            <span className="casefile__stamp-dot" />
+            DISPATCH CONFIRMED // CODE 200
+          </span>
+          <span className="casefile__status" data-status="verified">RECORDED</span>
         </div>
-        <p>Your message has been safely logged in the secure communications log and routed directly to the inbox.</p>
-        <button type="button" className="btn" onClick={() => setStatus("idle")}>
-          Send another transmission
+        <h3 style={{ margin: "0.5rem 0", fontSize: "1.15rem" }}>Signal Successfully Transmitted</h3>
+        <p className="card__text">
+          Your transmission has been verified and safely recorded in the detective communications log.
+          Expect a reply routed to the address provided.
+        </p>
+        <button type="button" className="btn btn--primary" onClick={() => setStatus("idle")}>
+          Transmit Another Signal
         </button>
       </div>
     );
@@ -102,41 +109,52 @@ export function ContactForm() {
 
   return (
     <form
-      className="panel panel--hud form"
+      className="panel panel--hud panel--casefile form"
       noValidate
       onSubmit={(event) => {
         event.preventDefault();
         void submit();
       }}
     >
+      <div className="casefile__header" style={{ marginBottom: "1rem" }}>
+        <span className="casefile__stamp">
+          <span className="casefile__stamp-dot" />
+          SECURE DISPATCH // TERMINAL 01
+        </span>
+        <span className="casefile__status" data-status="verified">
+          ENCRYPTED
+        </span>
+      </div>
+
       {userSession?.email && (
         <div
           style={{
             padding: "0.5rem 0.75rem",
-            background: "rgba(0, 255, 170, 0.08)",
-            border: "1px solid rgba(0, 255, 170, 0.2)",
-            borderRadius: "4px",
+            background: "rgba(229, 169, 60, 0.08)",
+            border: "1px solid rgba(229, 169, 60, 0.25)",
+            borderRadius: "3px",
             fontSize: "0.82rem",
-            color: "var(--accent)",
+            color: "var(--signal)",
             display: "flex",
             alignItems: "center",
             gap: "0.5rem",
             marginBottom: "1rem",
+            fontFamily: "var(--font-mono)",
           }}
         >
-          <span>Authenticated as: <strong>{userSession.email}</strong></span>
+          <span>CLEARANCE VERIFIED // <strong>{userSession.email}</strong></span>
         </div>
       )}
 
       <div className="form__row">
-        <Field id="name" label="Name" value={values.name} error={errors.name} onChange={(v) => update("name", v)} maxLength={LIMITS.name.max} autoComplete="name" />
-        <Field id="email" label="Email" type="email" value={values.email} error={errors.email} onChange={(v) => update("email", v)} maxLength={LIMITS.email.max} autoComplete="email" />
+        <Field id="name" label="Operative / Name" value={values.name} error={errors.name} onChange={(v) => update("name", v)} maxLength={LIMITS.name.max} autoComplete="name" />
+        <Field id="email" label="Signal Address / Email" type="email" value={values.email} error={errors.email} onChange={(v) => update("email", v)} maxLength={LIMITS.email.max} autoComplete="email" />
       </div>
 
-      <Field id="subject" label="Subject" value={values.subject} error={errors.subject} onChange={(v) => update("subject", v)} maxLength={LIMITS.subject.max} />
+      <Field id="subject" label="Subject / Case Directive" value={values.subject} error={errors.subject} onChange={(v) => update("subject", v)} maxLength={LIMITS.subject.max} />
 
       <div className="field" data-invalid={Boolean(errors.message)}>
-        <label htmlFor="message">Message</label>
+        <label htmlFor="message">Transmission Intelligence / Message</label>
         <textarea
           id="message"
           name="message"
@@ -164,15 +182,15 @@ export function ContactForm() {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap", marginTop: "1rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
           <button type="submit" className="btn btn--primary" disabled={status === "sending"}>
-            {status === "sending" ? "Transmitting…" : "Direct Send via Site"}
+            {status === "sending" ? "Transmitting Signal…" : "Dispatch Transmission"}
           </button>
           <a
             href={directMailto}
             className="btn btn--ghost"
-            title="Open your email client / Gmail with this message prefilled"
+            title="Open default email client with pre-filled case inquiry"
             style={{ fontSize: "0.85rem" }}
           >
-            Open in Gmail / Client
+            Direct Mail Client ↗
           </a>
         </div>
         <p className="form__status" data-tone={status === "error" ? "error" : "ok"} role="status" aria-live="polite">

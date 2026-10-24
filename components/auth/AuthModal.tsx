@@ -96,8 +96,8 @@ export function AuthModal({
         position: "fixed",
         inset: 0,
         zIndex: 10000,
-        backgroundColor: "rgba(0, 0, 0, 0.85)",
-        backdropFilter: "blur(6px)",
+        backgroundColor: "rgba(5, 6, 8, 0.88)",
+        backdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -106,23 +106,22 @@ export function AuthModal({
       onClick={onClose}
     >
       <div
-        className="panel panel--hud"
+        className="panel panel--hud panel--casefile"
         style={{
-          maxWidth: "460px",
+          maxWidth: "480px",
           width: "100%",
           padding: "2rem",
-          background: "var(--surface, #0b0d13)",
-          border: "1px solid var(--accent, #00ffaa)",
-          borderRadius: "8px",
-          boxShadow: "0 0 35px rgba(0, 255, 170, 0.15)",
+          background: "var(--graphite)",
+          border: "1px solid var(--edge-strong)",
+          boxShadow: "0 0 35px rgb(229 169 60 / 12%)",
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+        <div className="casefile__header" style={{ marginBottom: "1.25rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", background: "var(--accent)" }} />
-            <span style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "0.85rem", color: "var(--accent)", letterSpacing: "1px" }}>
-              AUTHENTICATION GATEWAY
+            <span className="casefile__stamp-dot" />
+            <span className="casefile__stamp-label">
+              GATEWAY // PROTOCOL-77
             </span>
           </div>
           <button
@@ -130,68 +129,82 @@ export function AuthModal({
             onClick={onClose}
             className="icon-btn"
             aria-label="Close"
-            style={{ fontSize: "1rem", lineHeight: 1 }}
+            style={{ fontSize: "1rem", lineHeight: 1, color: "var(--steel)" }}
           >
             ✕
           </button>
         </div>
 
         {/* Tab Switcher */}
-        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "0.5rem" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "0.4rem",
+            marginBottom: "1.5rem",
+            borderBottom: "1px solid var(--edge)",
+            paddingBottom: "0.6rem",
+          }}
+        >
           <button
             type="button"
             className="btn"
             style={{
               flex: 1,
-              background: tab === "google" ? "var(--accent)" : "transparent",
-              color: tab === "google" ? "#000" : "var(--text-muted)",
-              fontWeight: tab === "google" ? 650 : 400,
-              border: "none",
-              fontSize: "0.85rem",
-              padding: "0.4rem 0.5rem",
+              background: tab === "google" ? "var(--signal)" : "rgba(255,255,255,0.04)",
+              color: tab === "google" ? "#000" : "var(--steel)",
+              fontWeight: tab === "google" ? 700 : 400,
+              border: "1px solid " + (tab === "google" ? "var(--signal)" : "var(--edge)"),
+              fontSize: "0.78rem",
+              padding: "0.45rem 0.5rem",
+              fontFamily: "var(--font-mono)",
+              letterSpacing: "0.06em",
             }}
             onClick={() => setTab("google")}
           >
-            User Google Login
+            Operative Access
           </button>
           <button
             type="button"
             className="btn"
             style={{
               flex: 1,
-              background: tab === "admin" ? "var(--accent)" : "transparent",
-              color: tab === "admin" ? "#000" : "var(--text-muted)",
-              fontWeight: tab === "admin" ? 650 : 400,
-              border: "none",
-              fontSize: "0.85rem",
-              padding: "0.4rem 0.5rem",
+              background: tab === "admin" ? "var(--signal)" : "rgba(255,255,255,0.04)",
+              color: tab === "admin" ? "#000" : "var(--steel)",
+              fontWeight: tab === "admin" ? 700 : 400,
+              border: "1px solid " + (tab === "admin" ? "var(--signal)" : "var(--edge)"),
+              fontSize: "0.78rem",
+              padding: "0.45rem 0.5rem",
+              fontFamily: "var(--font-mono)",
+              letterSpacing: "0.06em",
             }}
             onClick={() => setTab("admin")}
           >
-            SuperAdmin Login
+            SuperAdmin Access
           </button>
         </div>
 
         {tab === "google" ? (
           <div>
-            <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>Sign in with Google</h3>
-            <p className="meta" style={{ marginBottom: "1.25rem", fontSize: "0.85rem" }}>
-              Sign in with your Gmail account to access verified transmission, interact with case files, and save bookmarks.
+            <h3 style={{ fontSize: "1.2rem", marginBottom: "0.3rem", color: "var(--bone)" }}>
+              Operative Authentication
+            </h3>
+            <p className="meta" style={{ marginBottom: "1.25rem", fontSize: "0.82rem", color: "var(--steel)" }}>
+              Authenticate with your Gmail account to access verified dispatch transmission, interact with case dossiers, and bookmark inquiries.
             </p>
 
             {googleError && (
               <div
                 style={{
                   padding: "0.5rem 0.75rem",
-                  background: "rgba(255, 60, 60, 0.15)",
-                  border: "1px solid rgba(255, 60, 60, 0.4)",
-                  color: "#ff6b6b",
-                  borderRadius: "4px",
-                  fontSize: "0.85rem",
+                  background: "rgba(224, 82, 82, 0.12)",
+                  border: "1px solid rgba(224, 82, 82, 0.35)",
+                  color: "var(--alert)",
+                  fontSize: "0.82rem",
+                  fontFamily: "var(--font-mono)",
                   marginBottom: "1rem",
                 }}
               >
-                {googleError}
+                [ALERT] {googleError}
               </div>
             )}
 
@@ -231,9 +244,11 @@ export function AuthModal({
             </a>
 
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", margin: "1rem 0" }}>
-              <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.1)" }} />
-              <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>OR DIRECT GMAIL SIGN IN</span>
-              <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.1)" }} />
+              <div style={{ flex: 1, height: "1px", background: "var(--edge)" }} />
+              <span style={{ fontSize: "0.72rem", color: "var(--haze)", fontFamily: "var(--font-mono)" }}>
+                OR DIRECT GMAIL DISPATCH
+              </span>
+              <div style={{ flex: 1, height: "1px", background: "var(--edge)" }} />
             </div>
 
             <form onSubmit={handleGoogleInstantLogin}>
@@ -242,7 +257,7 @@ export function AuthModal({
                 <input
                   id="google-email"
                   type="email"
-                  placeholder="e.g. user@gmail.com"
+                  placeholder="e.g. detective@gotham.city"
                   required
                   value={googleEmail}
                   onChange={(e) => setGoogleEmail(e.target.value)}
@@ -250,7 +265,7 @@ export function AuthModal({
               </div>
 
               <div className="field" style={{ marginBottom: "1rem" }}>
-                <label htmlFor="google-name">Display Name (Optional)</label>
+                <label htmlFor="google-name">Display Handle (Optional)</label>
                 <input
                   id="google-name"
                   type="text"
@@ -263,33 +278,35 @@ export function AuthModal({
               <button
                 type="submit"
                 className="btn btn--primary"
-                style={{ width: "100%" }}
+                style={{ width: "100%", justifyContent: "center" }}
                 disabled={googleLoading}
               >
-                {googleLoading ? "Authenticating…" : "Sign In with Gmail"}
+                {googleLoading ? "Authenticating…" : "Authorize with Gmail"}
               </button>
             </form>
           </div>
         ) : (
           <div>
-            <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>SuperAdmin Console</h3>
-            <p className="meta" style={{ marginBottom: "1.25rem", fontSize: "0.85rem" }}>
-              Enter SuperAdmin Gmail ID and credentials to unlock the administrative command console.
+            <h3 style={{ fontSize: "1.2rem", marginBottom: "0.3rem", color: "var(--bone)" }}>
+              SuperAdmin Command Portal
+            </h3>
+            <p className="meta" style={{ marginBottom: "1.25rem", fontSize: "0.82rem", color: "var(--steel)" }}>
+              Enter authorized SuperAdmin credentials to unlock the administrative command console.
             </p>
 
             {adminError && (
               <div
                 style={{
                   padding: "0.5rem 0.75rem",
-                  background: "rgba(255, 60, 60, 0.15)",
-                  border: "1px solid rgba(255, 60, 60, 0.4)",
-                  color: "#ff6b6b",
-                  borderRadius: "4px",
-                  fontSize: "0.85rem",
+                  background: "rgba(224, 82, 82, 0.12)",
+                  border: "1px solid rgba(224, 82, 82, 0.35)",
+                  color: "var(--alert)",
+                  fontSize: "0.82rem",
+                  fontFamily: "var(--font-mono)",
                   marginBottom: "1rem",
                 }}
               >
-                {adminError}
+                [SECURITY ALERT] {adminError}
               </div>
             )}
 
@@ -306,16 +323,16 @@ export function AuthModal({
               </div>
 
               <div className="field" style={{ marginBottom: "1.25rem" }}>
-                <label htmlFor="admin-pass">SuperAdmin Password</label>
+                <label htmlFor="admin-pass">Master Cipher / Password</label>
                 <input
                   id="admin-pass"
                   type="password"
                   required
-                  placeholder="Enter admin password"
+                  placeholder="Enter master password"
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
                 />
-                <p className="meta" style={{ margin: "0.25rem 0 0", fontSize: "0.75rem" }}>
+                <p className="meta" style={{ margin: "0.25rem 0 0", fontSize: "0.74rem", color: "var(--haze)" }}>
                   Default initial pass: <code>admin123</code> (configurable in settings)
                 </p>
               </div>
@@ -323,10 +340,10 @@ export function AuthModal({
               <button
                 type="submit"
                 className="btn btn--primary"
-                style={{ width: "100%" }}
+                style={{ width: "100%", justifyContent: "center" }}
                 disabled={adminLoading}
               >
-                {adminLoading ? "Verifying Credentials…" : "Enter Admin Panel"}
+                {adminLoading ? "Verifying Credentials…" : "Enter Admin Console"}
               </button>
             </form>
           </div>
@@ -335,4 +352,3 @@ export function AuthModal({
     </div>
   );
 }
-

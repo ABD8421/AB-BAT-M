@@ -4,18 +4,16 @@ import { skillCategories, skills } from "@/data/skills";
 import { TechNetwork } from "@/components/skills/TechNetwork";
 
 /**
- * Systems (spec §17–§19).
- * Levels are words, not percentages: "78% at React" is a number nobody can
- * defend in an interview (spec §18).
+ * Systems & Technical Arsenal styled as Gotham surveillance diagnostics.
  */
 export function Skills() {
   return (
     <Section
       id="skills"
-      eyebrow="Batcomputer // Systems"
-      title="Skills"
+      eyebrow="Technical arsenal // Systems diagnostics"
+      title="Systems"
       index="Sector 03"
-      lede="Grouped by where each tool sits in the stack. Levels are self-assessed and deliberately conservative."
+      lede="Tactical competencies grouped by domain: verified toolsets, conservative proficiencies, and architecture roles."
     >
       <div className="grid grid--3">
         {skillCategories.map((category, index) => {
@@ -24,10 +22,22 @@ export function Skills() {
 
           return (
             <Reveal key={category.id} delay={index * 60}>
-              <article className="panel panel--hud card">
-                <p className="card__num">{String(index + 1).padStart(2, "0")} // {category.label.toUpperCase()}</p>
-                <p className="card__text">{category.blurb}</p>
-                <ul className="stack" style={{ gap: "0.9rem", marginTop: "0.5rem" }}>
+              <article className="panel panel--hud panel--casefile card">
+                <div className="casefile__header">
+                  <span className="casefile__stamp">
+                    <span className="casefile__stamp-dot" />
+                    SYSTEM #{String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="casefile__status" data-status="verified">
+                    {category.label.toUpperCase()}
+                  </span>
+                </div>
+
+                <p className="card__text" style={{ fontSize: "0.85rem", color: "var(--steel)" }}>
+                  {category.blurb}
+                </p>
+
+                <ul className="stack" style={{ gap: "0.9rem", marginTop: "0.75rem" }}>
                   {items.map((skill) => (
                     <li key={skill.name} className="skill">
                       <span className="skill__top">
