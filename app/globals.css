@@ -821,12 +821,121 @@ ul { margin: 0; padding: 0; list-style: none; }
 .boot__fill { height: 100%; width: 0; background: var(--signal); transition: width 0.25s linear; }
 
 /* --- 9. ATMOSPHERE ------------------------------------------------------- */
+/* Batman Arkham Origins Theme Backdrop */
+.atmos__arkham-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.atmos__arkham-img {
+  position: absolute;
+  inset: -3%;
+  width: 106%;
+  height: 106%;
+  object-fit: cover;
+  object-position: center 25%;
+  opacity: 0.72;
+  filter: contrast(106%) brightness(95%);
+  animation: arkham-ambient-drift 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+[data-theme='light'] .atmos__arkham-img {
+  opacity: 0.28;
+  filter: contrast(95%) brightness(105%);
+}
+
+@keyframes arkham-ambient-drift {
+  0% { transform: scale(1.0) translate(0, 0); }
+  50% { transform: scale(1.025) translate(-0.8%, -0.5%); }
+  100% { transform: scale(1.01) translate(0.6%, 0.4%); }
+}
+
+.atmos__arkham-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 75% at 50% 32%, transparent 35%, rgba(5, 6, 8, 0.45) 75%, var(--void) 98%),
+    linear-gradient(180deg, rgba(5, 6, 8, 0.55) 0%, transparent 20%, transparent 70%, var(--void) 98%);
+  pointer-events: none;
+}
+
+.atmos__arkham-headlights-glow {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  width: min(90vw, 1000px);
+  height: 380px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 65% 45% at center, rgb(229 169 60 / 14%) 0%, transparent 72%);
+  filter: blur(45px);
+  animation: headlights-pulse 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes headlights-pulse {
+  0%, 100% { opacity: 0.45; transform: translateX(-50%) scale(1.0); }
+  50% { opacity: 0.85; transform: translateX(-50%) scale(1.06); }
+}
+
+.atmos__arkham-steam {
+  position: absolute;
+  bottom: -5%;
+  left: -20%;
+  width: 140%;
+  height: 45%;
+  background: radial-gradient(ellipse 80% 50% at 50% 100%, rgb(144 155 176 / 9%) 0%, transparent 80%);
+  filter: blur(40px);
+  animation: steam-drift 20s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes steam-drift {
+  0% { transform: translateX(-2%) translateY(0); opacity: 0.35; }
+  100% { transform: translateX(3%) translateY(-20px); opacity: 0.75; }
+}
+
+.atmos__arkham-blizzard-tint {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 95% 75% at 50% 25%, rgb(160 195 235 / 12%) 0%, transparent 75%),
+    linear-gradient(180deg, rgb(130 170 220 / 9%) 0%, transparent 40%, rgb(5 8 14 / 65%) 100%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.atmos__arkham-ground-frost {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  height: 38%;
+  background: radial-gradient(ellipse 70% 40% at 50% 100%, rgb(185 210 240 / 14%) 0%, transparent 85%);
+  filter: blur(50px);
+  pointer-events: none;
+  animation: frost-shimmer 14s ease-in-out infinite alternate;
+}
+
+@keyframes frost-shimmer {
+  0% { opacity: 0.45; transform: translateY(0) scale(1); }
+  50% { opacity: 0.85; transform: translateY(-15px) scale(1.04); }
+  100% { opacity: 0.55; transform: translateY(5px) scale(0.98); }
+}
+
 .atmos {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   overflow: hidden;
+}
+
+#main {
+  position: relative;
+  z-index: 1;
 }
 
 /* Atmospheric Bat-Signal Spotlight Beam */
@@ -859,7 +968,7 @@ ul { margin: 0; padding: 0; list-style: none; }
     linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(circle at 50% 40%, black 25%, transparent 85%);
-  opacity: 0.85;
+  opacity: 0.32;
   pointer-events: none;
 }
 
@@ -901,7 +1010,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   transform: translate(-50%, -50%);
   display: grid;
   place-content: center;
-  opacity: 0.65;
+  opacity: 0.20;
   transition: opacity 0.5s var(--ease);
 }
 
@@ -941,7 +1050,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.atmos__rain { position: absolute; inset: 0; opacity: 0.32; }
+.atmos__rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 1 !important;
+  display: block !important;
+  pointer-events: none;
+  z-index: 1;
+}
 
 /* --- 10. HERO ------------------------------------------------------------ */
 .hero {
@@ -1173,5 +1292,324 @@ details[open] .entry__toggle { color: var(--signal); }
     transition-duration: 0.001ms !important;
   }
   .reveal { opacity: 1; transform: none; }
-  .atmos__rain { display: none; }
+  /* .atmos__rain active in demo */
+}
+
+
+/* --- 19. RESPONSIVE PERFECTION FOR ALL DEVICES ---------------------------- */
+
+/* Mobile Navigation Sizing & Layout */
+@media (max-width: 640px) {
+  .nav__inner {
+    height: 3.75rem;
+    gap: var(--space-2);
+  }
+  .nav__brand {
+    font-size: 0.88rem;
+    gap: 0.5rem;
+  }
+  .nav__mark {
+    width: 24px;
+    height: 24px;
+  }
+  .nav__auth-desktop {
+    display: none !important;
+  }
+  .drawer {
+    inset: 3.75rem 0 0;
+    padding: var(--space-3) 1rem;
+  }
+  .drawer__link {
+    padding: 0.85rem 0.25rem;
+    font-size: 1.35rem;
+  }
+  .shell {
+    width: min(100% - 1.5rem, var(--shell));
+  }
+}
+
+/* Extra small mobile phones (e.g. <= 380px) */
+@media (max-width: 380px) {
+  .shell {
+    width: min(100% - 1.25rem, var(--shell));
+  }
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .card__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Hero Section Responsiveness */
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding-block: 5.5rem var(--space-4);
+  }
+  .hero__title {
+    font-size: clamp(2rem, 1.8rem + 4vw, 3.2rem);
+    margin-block: var(--space-1) var(--space-2);
+  }
+  .hero__role {
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+  }
+  .hero__lede {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .hero__stats {
+    grid-template-columns: repeat(auto-fit, minmax(5.8rem, 1fr));
+  }
+  .hero__stat {
+    padding: 0.65rem 0.5rem;
+  }
+  .hero__stat b {
+    font-size: 1.4rem;
+  }
+  .dossier__row {
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+  }
+  .section {
+    padding-block: var(--space-4);
+  }
+  .section__head {
+    margin-bottom: var(--space-3);
+  }
+  .section__title {
+    font-size: clamp(1.6rem, 1.4rem + 2.5vw, 2.5rem);
+  }
+}
+
+/* Incident Timeline Responsiveness */
+@media (max-width: 640px) {
+  .entry--caselog .entry__summary {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: 0.4rem 0.65rem;
+    padding: 0.85rem 0.75rem;
+  }
+  .entry--caselog .entry__node-marker {
+    grid-row: 1 / 3;
+    margin-top: 0.25rem;
+  }
+  .entry--caselog .entry__stamp-group {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: center;
+  }
+  .entry--caselog .entry__title-group {
+    grid-column: 2 / 3;
+  }
+  .entry--caselog .entry__role {
+    font-size: 0.95rem;
+  }
+  .entry--caselog .entry__org {
+    font-size: 0.8rem;
+  }
+  .entry--caselog .entry__toggle {
+    grid-column: 3 / 4;
+    grid-row: 1 / 3;
+    align-self: center;
+    font-size: 0.65rem;
+  }
+  .entry--caselog .entry__detail {
+    padding: 0 0.85rem 1rem;
+    gap: 0.75rem;
+  }
+}
+
+/* Card Chamfers & Imagery for Mobile */
+@media (max-width: 640px) {
+  .panel--casefile {
+    padding: 1rem 0.85rem;
+  }
+  .casefile__cover {
+    height: 150px;
+  }
+  .casefile__header {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .casefile__stamp {
+    font-size: 0.65rem;
+  }
+  .casefile__status {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.45rem;
+  }
+}
+
+/* Atmosphere Responsive Scaling */
+@media (max-width: 768px) {
+  .atmos__arkham-img {
+    object-position: 48% 18%;
+    opacity: 0.36;
+  }
+  .atmos__arkham-headlights-glow {
+    width: 95vw;
+    height: 260px;
+    bottom: 8%;
+  }
+  .atmos__arkham-steam {
+    height: 35%;
+  }
+  .atmos__arkham-ground-frost {
+    height: 28%;
+    filter: blur(35px);
+  }
+  .atmos__spotlight-beam {
+    width: 130vw;
+    height: 70vh;
+    top: -5%;
+  }
+  .atmos__radar {
+    width: 140vw;
+  }
+}
+
+/* Footer Responsive Layout */
+@media (max-width: 640px) {
+  .footer {
+    padding-block: var(--space-4);
+  }
+  .footer__inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+  }
+  .footer__links {
+    justify-content: center;
+    gap: 0.6rem 1rem;
+  }
+}
+
+/* iOS Safari auto-zoom prevention: ensure inputs >= 16px */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* --- 20. ARKHAM ORIGINS SNOWFALL DEMO CONTROLS ---------------------------- */
+.snow-demo-hud {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  background: color-mix(in srgb, var(--void) 90%, transparent);
+  border: 1px solid rgba(229, 169, 60, 0.4);
+  border-radius: 3px;
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.85), 0 0 16px -4px rgb(229 169 60 / 20%);
+  backdrop-filter: blur(12px);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--bone);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.snow-demo-hud__badge {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--signal);
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.snow-demo-hud__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 8px var(--signal);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.snow-demo-hud__btn-group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 0.35rem;
+}
+
+.snow-demo-hud__btn {
+  padding: 0.2rem 0.55rem;
+  background: transparent;
+  border: 1px solid var(--edge);
+  color: var(--text-dim);
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s var(--ease);
+}
+
+.snow-demo-hud__btn:hover {
+  border-color: var(--signal);
+  color: var(--bone);
+}
+
+.snow-demo-hud__btn[data-active="true"] {
+  background: var(--signal);
+  color: var(--void);
+  border-color: var(--signal);
+  font-weight: 700;
+}
+
+.snow-demo-hud__toggle {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  font-size: 0.75rem;
+  margin-left: 0.25rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.snow-demo-hud__toggle:hover {
+  color: var(--signal);
+}
+
+.snow-demo-hud--minimized {
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .snow-demo-hud {
+    bottom: 0.85rem;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: calc(100vw - 1.5rem);
+    padding: 0.35rem 0.55rem;
+    font-size: 0.6rem;
+  }
+  .snow-demo-hud__badge span {
+    display: none;
+  }
+  .snow-demo-hud__btn {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.58rem;
+  }
 }

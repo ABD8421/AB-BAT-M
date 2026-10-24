@@ -6,6 +6,7 @@ import { Nav } from "@/components/navigation/Nav";
 import { TelemetryRail } from "@/components/navigation/TelemetryRail";
 import { BootSequence } from "@/components/boot/BootSequence";
 import { Atmosphere } from "@/components/atmosphere/Atmosphere";
+import { SnowDemoHUD } from "@/components/atmosphere/SnowDemoHUD";
 import { Footer } from "@/components/footer/Footer";
 import { Shortcuts } from "@/components/navigation/Shortcuts";
 import { site } from "@/data/site";
@@ -75,6 +76,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a className="skip-link" href="#main">Skip to content</a>
         <BootSequence />
         <Atmosphere />
+        <SnowDemoHUD />
         <TelemetryRail />
         <Nav />
         <Shortcuts />

@@ -4,6 +4,20 @@ import { MARK_SIGIL } from "@/components/ui/Mark";
 export function Atmosphere() {
   return (
     <div className="atmos" aria-hidden="true">
+      <div className="atmos__arkham-backdrop">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/batman-arkham-origins-bg.jpg"
+          alt="Batman Arkham Origins Theme Backdrop"
+          className="atmos__arkham-img"
+        />
+        <div className="atmos__arkham-blizzard-tint" />
+        <div className="atmos__arkham-vignette" />
+        <div className="atmos__arkham-steam" />
+        <div className="atmos__arkham-ground-frost" />
+        <div className="atmos__arkham-headlights-glow" />
+      </div>
+
       <div className="atmos__spotlight-beam" />
       <div className="atmos__glow" />
       <div className="atmos__blueprint" />

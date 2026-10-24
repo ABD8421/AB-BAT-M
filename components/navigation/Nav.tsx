@@ -162,7 +162,7 @@ export function Nav() {
                     className="btn btn--primary"
                     style={{ fontSize: "0.8rem", padding: "0.3rem 0.6rem" }}
                   >
-                    ⚡ Admin Panel
+                    Admin Panel
                   </Link>
                 ) : (
                   <span
@@ -203,7 +203,7 @@ export function Nav() {
                 </button>
               </div>
             ) : (
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+              <div className="nav__auth-desktop" style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                 <button
                   type="button"
                   className="btn btn--ghost"
@@ -311,7 +311,7 @@ export function Nav() {
                 <span className="meta">Signed in: {session.user.email}</span>
                 {session.isAdmin && (
                   <Link href="/admin" className="btn btn--primary" onClick={() => setOpen(false)}>
-                    ⚡ Open Admin Panel
+                    Admin Panel
                   </Link>
                 )}
                 <button type="button" onClick={handleLogout} className="btn btn--ghost">
