@@ -104,6 +104,10 @@ function IdentityCard() {
           <dd>{site.location}</dd>
         </div>
         <div className="dossier__row">
+          <dt>Tactical Unit</dt>
+          <dd>The Dark Knight Tumbler // Active</dd>
+        </div>
+        <div className="dossier__row">
           <dt>Status</dt>
           <dd>
             {site.availability.open ? (

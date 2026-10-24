@@ -2,20 +2,29 @@ import { Rain } from "./Rain";
 import { MARK_SIGIL } from "@/components/ui/Mark";
 
 /**
- * Batcomputer atmosphere.
+ * Batcomputer & The Dark Knight atmosphere.
  *
- * Ambient background only: a soft backlight, a radar grid with range rings and
- * a slow sweep, the project's own sensing mark as a watermark, lightweight
- * canvas rain and a grain layer.
- *
- * The centrepiece is the same original glyph as the site mark (see
- * components/ui/Mark.tsx) — not a third-party emblem. The whole layer is
- * decorative, so it is inert to assistive technology, and every animated part
- * is disabled under prefers-reduced-motion (see globals.css).
+ * Ambient background layer featuring:
+ *   1. Cinematic Dark Knight Tumbler Batmobile & Batman backdrop
+ *   2. Multi-point atmospheric vignettes and headlight lens flare
+ *   3. Radar grid with range rings and scanning telemetry
+ *   4. Lightweight canvas rain and film grain layer
  */
 export function Atmosphere() {
   return (
     <div className="atmos" aria-hidden="true">
+      {/* Cinematic The Dark Knight Tumbler & Batman Backdrop */}
+      <div className="atmos__darkknight">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/batman-dark-knight-tumbler.jpg"
+          alt="Batman with Tumbler Batmobile"
+          className="atmos__darkknight-img"
+        />
+        <div className="atmos__darkknight-vignette" />
+        <div className="atmos__darkknight-spotlight" />
+      </div>
+
       <div className="atmos__glow" />
 
       {/* Radar grid: 16 radial filaments, sagging range webs and rings. */}
