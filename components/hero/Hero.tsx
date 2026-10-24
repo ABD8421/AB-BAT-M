@@ -4,14 +4,6 @@ import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
 import { certificates } from "@/data/certificates";
 
-/**
- * Gotham Detective Case-Management Hero.
- *
- * Tactical developer profile featuring:
- *   - Coordinate telemetry header & evidence classification stamps
- *   - Case-number counter telemetry from live data
- *   - Personnel investigation dossier card with biometric scan telemetry
- */
 export function Hero() {
   const verifiedCerts = certificates.filter((c) => !c.placeholder).length;
   const stats = [
@@ -81,7 +73,6 @@ export function Hero() {
   );
 }
 
-/** Gotham detective personnel dossier card */
 function IdentityCard() {
   return (
     <article

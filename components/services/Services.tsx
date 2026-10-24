@@ -3,7 +3,6 @@ import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { process, services } from "@/data/services";
 
-/** Services + mission protocol styled as tactical engineering engagements. */
 export function Services() {
   return (
     <Section

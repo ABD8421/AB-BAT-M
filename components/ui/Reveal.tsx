@@ -2,11 +2,6 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 
-/**
- * Scroll reveal via IntersectionObserver — no animation library needed
- * (spec §64: no dependency for something CSS already does).
- * Reduced-motion users get the content immediately; see globals.css.
- */
 export function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
 

@@ -9,15 +9,6 @@ import { site } from "@/data/site";
 import { services } from "@/data/services";
 import { certificates } from "@/data/certificates";
 
-/**
- * Simulated terminal (spec §37).
- *
- * SECURITY, NON-NEGOTIABLE: this is a lookup table over local data. It has no
- * eval, no shell, no network call and no server round-trip. Unknown input is
- * echoed back as an error string and nothing else. Do not "improve" this by
- * adding a backend command runner.
- */
-
 interface Line {
   kind: "in" | "out" | "err";
   text: string;
@@ -94,9 +85,6 @@ export function Terminal() {
     }
 
     const name = input.toLowerCase();
-    // Own-property lookup only: a bare `COMMANDS[name]` also matches inherited
-    // Object.prototype members, so "constructor" would resolve to a function
-    // and return a non-string into the log, which crashes the render.
     const command = Object.hasOwn(COMMANDS, name) ? COMMANDS[name] : undefined;
     setLines((current) => [
       ...current,

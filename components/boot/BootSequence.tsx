@@ -15,15 +15,6 @@ const LINES = [
 
 const STEP_MS = 190;
 
-/**
- * Cinematic initialisation (spec §10).
- *
- * Hard rules enforced here:
- *  - total run time is capped at ~1.2s
- *  - it never blocks input: the page is fully interactive underneath and the
- *    overlay is inert
- *  - reduced-motion and repeat visits skip it entirely
- */
 export function BootSequence() {
   const [index, setIndex] = useState(0);
   const [done, setDone] = useState(true);

@@ -12,11 +12,6 @@ import { site } from "@/data/site";
 import { buildPersonJsonLd } from "@/lib/structured-data";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
-/**
- * SEO defaults (spec §47).
- * Note the identity order: the professional name leads, the Gotham concept is
- * never the primary keyword.
- */
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -70,19 +65,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
-        {/* Applies the saved/system theme before first paint (no flash).
-            Inlined as head markup — rather than an external <script src> or
-            next/script — so it runs without a second render-blocking request,
-            and because the preview harness injects its own inline script into
-            <head>, which reconciling against an external src script turned
-            into a hydration mismatch. The CSP allows inline scripts via
-            'unsafe-inline' (see next.config.ts); the source is single-sourced
-            in lib/theme.ts so it cannot drift from the toggle. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <script
           type="application/ld+json"
-          // Static, build-time JSON produced from local data — no user input
-          // reaches this string, and the CSP allows it by 'unsafe-inline'.
           dangerouslySetInnerHTML={{ __html: buildPersonJsonLd() }}
         />
       </head>

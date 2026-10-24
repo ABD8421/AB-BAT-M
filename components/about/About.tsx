@@ -3,9 +3,6 @@ import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/data/site";
 
-/**
- * About section styled as a Gotham detective intelligence dossier.
- */
 export function About() {
   return (
     <Section

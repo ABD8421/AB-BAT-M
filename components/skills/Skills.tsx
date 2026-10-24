@@ -3,9 +3,6 @@ import { Reveal } from "@/components/ui/Reveal";
 import { skillCategories, skills } from "@/data/skills";
 import { TechNetwork } from "@/components/skills/TechNetwork";
 
-/**
- * Systems & Technical Arsenal styled as Gotham surveillance diagnostics.
- */
 export function Skills() {
   return (
     <Section

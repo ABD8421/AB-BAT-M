@@ -9,9 +9,6 @@ import { navSections, site } from "@/data/site";
 import { AuthModal } from "@/components/auth/AuthModal";
 import type { UserSession, DynamicSection } from "@/lib/types";
 
-/**
- * Sticky navigation with dynamic sections, Google user auth & SuperAdmin status
- */
 export function Nav() {
   const pathname = usePathname();
   const router = useRouter();
@@ -20,10 +17,7 @@ export function Nav() {
   const [active, setActive] = useState<string>("home");
   const [open, setOpen] = useState(false);
 
-  // Dynamic sections state
   const [sections, setSections] = useState<Array<{ id: string; label: string }>>([...navSections]);
-
-  // Auth state
   const [session, setSession] = useState<{ user: UserSession | null; isAdmin: boolean } | null>(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authTab, setAuthTab] = useState<"google" | "admin">("google");
@@ -59,7 +53,6 @@ export function Nav() {
     refreshSession();
     fetchSections();
 
-    // Check if URL has ?authModal=google
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       if (url.searchParams.get("authModal") === "google") {
@@ -144,7 +137,7 @@ export function Nav() {
           </Link>
 
           <nav className="nav__list" aria-label="Sections">
-            {sections.map((section, idx) => (
+            {sections.map((section) => (
               <Link
                 key={section.id}
                 href={href(section.id)}
@@ -153,7 +146,6 @@ export function Nav() {
                   isHome && active === section.id ? "true" : undefined
                 }
               >
-                <span className="nav__sec-num">{String(idx + 1).padStart(2, "0")}</span>
                 <span>{section.label}</span>
               </Link>
             ))}
@@ -162,7 +154,6 @@ export function Nav() {
           <div className="nav__actions" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <ThemeToggle />
 
-            {/* User Auth Pill */}
             {session?.user ? (
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 {session.isAdmin ? (
@@ -177,13 +168,13 @@ export function Nav() {
                   <span
                     style={{
                       fontSize: "0.8rem",
-                      color: "var(--accent)",
+                      color: "var(--signal)",
                       display: "flex",
                       alignItems: "center",
                       gap: "0.35rem",
                       padding: "0.25rem 0.5rem",
-                      background: "rgba(0,255,170,0.08)",
-                      border: "1px solid rgba(0,255,170,0.2)",
+                      background: "var(--signal-soft)",
+                      border: "1px solid var(--edge)",
                       borderRadius: "4px",
                     }}
                     title={session.user.email}
@@ -289,14 +280,13 @@ export function Nav() {
 
       {open ? (
         <div className="drawer" id="mobile-menu">
-          {sections.map((section, index) => (
+          {sections.map((section) => (
             <Link
               key={section.id}
               href={href(section.id)}
               className="drawer__link"
               onClick={() => setOpen(false)}
             >
-              <span>{String(index + 1).padStart(2, "0")}</span>
               {section.label}
             </Link>
           ))}
@@ -305,18 +295,17 @@ export function Nav() {
             className="drawer__link"
             onClick={() => setOpen(false)}
           >
-            <span>{String(sections.length + 1).padStart(2, "0")}</span>Résumé
+            Résumé
           </Link>
           <Link
             href="/terminal"
             className="drawer__link"
             onClick={() => setOpen(false)}
           >
-            <span>{String(sections.length + 2).padStart(2, "0")}</span>
             Terminal
           </Link>
 
-          <div style={{ padding: "1.5rem", borderTop: "1px solid rgba(255,255,255,0.1)", marginTop: "1rem" }}>
+          <div style={{ padding: "1.5rem", borderTop: "1px solid var(--edge)", marginTop: "1rem" }}>
             {session?.user ? (
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <span className="meta">Signed in: {session.user.email}</span>

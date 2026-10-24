@@ -2,14 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-/**
- * Procedural rain on a 2D canvas (spec §04, §46).
- *
- * Chosen over Three.js on purpose: this is a 2D effect, and shipping a WebGL
- * runtime for it would cost hundreds of kilobytes for no visual gain.
- * It disables itself for reduced-motion, small screens, low core counts and
- * whenever the tab is hidden.
- */
 export function Rain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 

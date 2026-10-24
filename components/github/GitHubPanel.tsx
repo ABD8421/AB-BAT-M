@@ -2,10 +2,6 @@ import { Section } from "@/components/ui/Section";
 import { getGitHubSnapshot } from "@/lib/github";
 import { externalLinkProps } from "@/lib/utils";
 
-/**
- * GitHub (spec §30, §71).
- * Server component: repository intelligence and telemetry feeds.
- */
 export async function GitHubPanel() {
   const snapshot = await getGitHubSnapshot();
 

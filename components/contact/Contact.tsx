@@ -3,9 +3,6 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { site } from "@/data/site";
 import { externalLinkProps, isPlaceholderText } from "@/lib/utils";
 
-/**
- * Gotham encrypted transmission & dispatch channel.
- */
 export function Contact() {
   const channels = [
     { label: "Dispatch Email", value: site.email, href: `mailto:${site.email}` },

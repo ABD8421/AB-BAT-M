@@ -15,10 +15,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/resume" },
 };
 
-/**
- * Operative Dossier (spec §32).
- * Formatted as a verified Gotham detective personnel dossier and service record.
- */
 export default function ResumePage() {
   return (
     <div className="shell" style={{ paddingTop: "8rem", paddingBottom: "var(--space-6)" }}>

@@ -19,13 +19,11 @@ export function AuthModal({
   const router = useRouter();
   const [tab, setTab] = useState<"google" | "admin">(initialTab);
 
-  // Google instant login state
   const [googleEmail, setGoogleEmail] = useState("");
   const [googleName, setGoogleName] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
   const [googleError, setGoogleError] = useState("");
 
-  // Admin login state
   const [adminEmail, setAdminEmail] = useState("abdullahalanser@gmail.com");
   const [adminPassword, setAdminPassword] = useState("");
   const [adminLoading, setAdminLoading] = useState(false);
@@ -135,7 +133,6 @@ export function AuthModal({
           </button>
         </div>
 
-        {/* Tab Switcher */}
         <div
           style={{
             display: "flex",
@@ -208,7 +205,6 @@ export function AuthModal({
               </div>
             )}
 
-            {/* Official OAuth link button */}
             <a
               href="/api/auth/google"
               className="btn btn--ghost"

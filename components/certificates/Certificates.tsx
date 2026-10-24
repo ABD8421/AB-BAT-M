@@ -8,9 +8,6 @@ import { achievements as seedAchievements, certificates as seedCertificates } fr
 import { externalLinkProps } from "@/lib/utils";
 import type { Certificate, Achievement } from "@/lib/types";
 
-/**
- * Credentials & Clearances styled as verified forensic dossiers.
- */
 export function Certificates({
   items,
   achievementsItems,

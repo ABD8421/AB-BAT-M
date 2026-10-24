@@ -10,15 +10,11 @@ const STATUS_LABEL: Record<Project["status"], string> = {
   concept: "TACTICAL CONCEPT",
 };
 
-/**
- * Case file card styled as a Gotham detective investigation dossier.
- */
 export function ProjectCard({ project }: { project: Project }) {
   const caseId = project.caseNumber ? String(project.caseNumber).padStart(3, "0") : "001";
 
   return (
     <article className="panel panel--hud panel--casefile card">
-      {/* Evidence dossier header bar */}
       <div className="casefile__header">
         <div className="casefile__stamp">
           <span className="casefile__stamp-dot" />
@@ -54,7 +50,6 @@ export function ProjectCard({ project }: { project: Project }) {
       </h3>
       <p className="card__text">{project.summary}</p>
 
-      {/* Forensic tech tags */}
       <ul className="card__tags">
         {project.tech.slice(0, 5).map((tech) => (
           <li key={tech} className="tag tag--tactical">

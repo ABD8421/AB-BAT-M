@@ -13,10 +13,6 @@ import { getSections, getEducation, getCertificates } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
-/**
- * Dynamic Home Narrative
- * Sections are dynamically configured, ordered, enabled, or erased by the SuperAdmin.
- */
 export default function HomePage() {
   const sections = getSections();
   const educationItems = getEducation();

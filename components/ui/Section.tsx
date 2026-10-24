@@ -9,10 +9,6 @@ interface SectionProps {
   children: ReactNode;
 }
 
-/**
- * Section with Gotham Noir Detective case management header,
- * blueprint coordinate marks, and crosshairs.
- */
 export function Section({ id, eyebrow, title, lede, index, children }: SectionProps) {
   return (
     <section id={id} className="section" aria-labelledby={`${id}-title`}>

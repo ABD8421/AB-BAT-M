@@ -5,7 +5,6 @@ import { THEME_STORAGE_KEY } from "@/lib/theme";
 
 type Theme = "dark" | "light";
 
-/** Theme state lives on <html data-theme>, set pre-paint by lib/theme.ts. */
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("dark");
 

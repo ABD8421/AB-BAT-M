@@ -7,9 +7,6 @@ type Status = "idle" | "sending" | "sent" | "error";
 
 const EMPTY = { name: "", email: "", subject: "", message: "", website: "" };
 
-/**
- * Gotham detective contact form with direct mailing capabilities & session autofill.
- */
 export function ContactForm() {
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState<FieldErrors>({});

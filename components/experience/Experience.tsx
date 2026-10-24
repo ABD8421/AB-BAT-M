@@ -3,10 +3,6 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Unverified } from "@/components/ui/Unverified";
 import { experience } from "@/data/experience";
 
-/**
- * Case progress log and incident timeline.
- * Keyboard accessible <details>/<summary> styled as tactical detective incident records.
- */
 export function Experience() {
   if (experience.length === 0) return null;
 

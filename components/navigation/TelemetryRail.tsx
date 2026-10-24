@@ -2,12 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-/**
- * Tactical Telemetry Rail.
- *
- * Fixed left rail reading out scroll depth, elevation, and Gotham coordinates.
- * Desktop only (>=1100px) and purely decorative (inert to assistive tech).
- */
 export function TelemetryRail() {
   const [percent, setPercent] = useState(0);
 

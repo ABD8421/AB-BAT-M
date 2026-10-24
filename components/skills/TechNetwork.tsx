@@ -2,13 +2,6 @@ import { site } from "@/data/site";
 
 const NODES = ["React", "Node.js", "Flutter", "Python", "MongoDB", "SQL", "GitHub", "Firebase", "AI"];
 
-/**
- * Technology network (spec §19).
- *
- * Pure inline SVG with CSS animation — it is the static fallback and the
- * animated version at the same time, so there is nothing to degrade to on a
- * low-powered device and no JavaScript is shipped for it.
- */
 export function TechNetwork() {
   const radius = 148;
   const centre = { x: 250, y: 180 };

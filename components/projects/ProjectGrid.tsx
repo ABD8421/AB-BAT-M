@@ -12,9 +12,6 @@ function isFilter(value: string | null): value is Filter {
   return value !== null && projectFilters.some((filter) => filter.id === value);
 }
 
-/**
- * Filtering (spec §21).
- */
 export function ProjectGrid({
   basePath = "/projects",
   items,

@@ -7,9 +7,6 @@ import { Unverified } from "@/components/ui/Unverified";
 import { education as seedEducation } from "@/data/education";
 import type { Education as EducationType } from "@/lib/types";
 
-/**
- * Academic Intelligence Record styled as Gotham forensic dossiers.
- */
 export function Education({ items }: { items?: EducationType[] }) {
   const education = items && items.length > 0 ? items : seedEducation;
   const [activeImage, setActiveImage] = useState<{ src: string; title: string } | null>(null);

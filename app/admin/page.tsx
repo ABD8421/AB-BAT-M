@@ -147,7 +147,6 @@ export default function AdminDashboardPage() {
     router.refresh();
   }
 
-  // ---------------- SECTIONS ACTIONS ----------------
   async function toggleSectionStatus(id: string, currentEnabled: boolean) {
     try {
       const res = await fetch("/api/admin/sections", {
@@ -229,7 +228,6 @@ export default function AdminDashboardPage() {
     }
   }
 
-  // ---------------- PROJECTS ACTIONS ----------------
   function openAddProjectModal() {
     setEditingProject(null);
     setProjectForm({
@@ -324,7 +322,6 @@ export default function AdminDashboardPage() {
     }
   }
 
-  // ---------------- CREDENTIALS / CERTIFICATES ACTIONS ----------------
   function openAddCertModal() {
     setEditingCert(null);
     setCertForm({
@@ -389,7 +386,6 @@ export default function AdminDashboardPage() {
     }
   }
 
-  // ---------------- EDUCATION ACTIONS ----------------
   function openAddEduModal() {
     setEditingEdu(null);
     setEduForm({
@@ -460,7 +456,6 @@ export default function AdminDashboardPage() {
     }
   }
 
-  // ---------------- MESSAGES ACTIONS ----------------
   async function toggleMessageRead(id: string, currentRead: boolean) {
     try {
       const res = await fetch("/api/admin/messages", {
@@ -489,7 +484,6 @@ export default function AdminDashboardPage() {
     }
   }
 
-  // ---------------- SETTINGS ACTIONS ----------------
   async function handleSaveSettings(e: React.FormEvent) {
     e.preventDefault();
     try {
@@ -622,7 +616,6 @@ export default function AdminDashboardPage() {
         ))}
       </div>
 
-      {/* ================= TAB 1: SECTIONS ================= */}
       {activeTab === "sections" && (
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem", flexWrap: "wrap", gap: "1rem" }}>
@@ -731,7 +724,6 @@ export default function AdminDashboardPage() {
         </div>
       )}
 
-      {/* ================= TAB 2: PROJECTS ================= */}
       {activeTab === "projects" && (
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem", flexWrap: "wrap", gap: "1rem" }}>
@@ -814,7 +806,6 @@ export default function AdminDashboardPage() {
         </div>
       )}
 
-      {/* ================= TAB 3: CREDENTIALS & EDUCATION ================= */}
       {activeTab === "credentials" && (
         <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
           {/* Sub-Section A: Certificates */}
@@ -959,7 +950,6 @@ export default function AdminDashboardPage() {
         </div>
       )}
 
-      {/* ================= TAB 4: MESSAGES ================= */}
       {activeTab === "messages" && (
         <div>
           <div style={{ marginBottom: "1.25rem" }}>
@@ -1041,7 +1031,6 @@ export default function AdminDashboardPage() {
         </div>
       )}
 
-      {/* ================= TAB 5: SETTINGS ================= */}
       {activeTab === "settings" && (
         <div style={{ maxWidth: "600px" }}>
           <div style={{ marginBottom: "1.5rem" }}>
