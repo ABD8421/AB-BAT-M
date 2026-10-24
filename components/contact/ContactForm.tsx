@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LIMITS, validateContact, type FieldErrors } from "@/lib/validation";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -8,16 +8,30 @@ type Status = "idle" | "sending" | "sent" | "error";
 const EMPTY = { name: "", email: "", subject: "", message: "", website: "" };
 
 /**
- * Contact form (spec §33, §34).
- *
- * Client validation is a courtesy. The route handler validates again and is the
- * only thing that decides whether a message is accepted.
+ * Contact form with direct mailing capabilities & session autofill.
  */
 export function ContactForm() {
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [notice, setNotice] = useState("");
+  const [userSession, setUserSession] = useState<{ email?: string; name?: string } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/auth/session")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok && data.user) {
+          setUserSession(data.user);
+          setValues((prev) => ({
+            ...prev,
+            name: prev.name || data.user.name || "",
+            email: prev.email || data.user.email || "",
+          }));
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   function update(field: keyof typeof EMPTY, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -48,7 +62,11 @@ export function ContactForm() {
 
       if (response.ok && payload.ok) {
         setStatus("sent");
-        setValues(EMPTY);
+        setValues((prev) => ({
+          ...EMPTY,
+          name: userSession?.name || "",
+          email: userSession?.email || "",
+        }));
         return;
       }
 
@@ -61,13 +79,22 @@ export function ContactForm() {
     }
   }
 
+  const directMailto = `mailto:abdullahalanser@gmail.com?subject=${encodeURIComponent(
+    values.subject || "Portfolio Inquiry"
+  )}&body=${encodeURIComponent(
+    `From: ${values.name} (${values.email})\n\n${values.message}`
+  )}`;
+
   if (status === "sent") {
     return (
       <div className="panel panel--hud sent" role="status">
-        <h3>Signal transmitted</h3>
-        <p>Your message has been delivered. Expect a reply at the address you provided.</p>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+          <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", background: "var(--accent)" }} />
+          <h3 style={{ margin: 0 }}>Direct Transmission Received</h3>
+        </div>
+        <p>Your message has been safely logged in the secure communications log and routed directly to the inbox.</p>
         <button type="button" className="btn" onClick={() => setStatus("idle")}>
-          Send another message
+          Send another transmission
         </button>
       </div>
     );
@@ -82,6 +109,25 @@ export function ContactForm() {
         void submit();
       }}
     >
+      {userSession?.email && (
+        <div
+          style={{
+            padding: "0.5rem 0.75rem",
+            background: "rgba(0, 255, 170, 0.08)",
+            border: "1px solid rgba(0, 255, 170, 0.2)",
+            borderRadius: "4px",
+            fontSize: "0.82rem",
+            color: "var(--accent)",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            marginBottom: "1rem",
+          }}
+        >
+          <span>Authenticated as: <strong>{userSession.email}</strong></span>
+        </div>
+      )}
+
       <div className="form__row">
         <Field id="name" label="Name" value={values.name} error={errors.name} onChange={(v) => update("name", v)} maxLength={LIMITS.name.max} autoComplete="name" />
         <Field id="email" label="Email" type="email" value={values.email} error={errors.email} onChange={(v) => update("email", v)} maxLength={LIMITS.email.max} autoComplete="email" />
@@ -115,10 +161,20 @@ export function ContactForm() {
         <input id="website" name="website" tabIndex={-1} autoComplete="off" value={values.website} onChange={(event) => update("website", event.target.value)} />
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-        <button type="submit" className="btn btn--primary" disabled={status === "sending"}>
-          {status === "sending" ? "Transmitting…" : "Send signal"}
-        </button>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap", marginTop: "1rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+          <button type="submit" className="btn btn--primary" disabled={status === "sending"}>
+            {status === "sending" ? "Transmitting…" : "Direct Send via Site"}
+          </button>
+          <a
+            href={directMailto}
+            className="btn btn--ghost"
+            title="Open your email client / Gmail with this message prefilled"
+            style={{ fontSize: "0.85rem" }}
+          >
+            Open in Gmail / Client
+          </a>
+        </div>
         <p className="form__status" data-tone={status === "error" ? "error" : "ok"} role="status" aria-live="polite">
           {notice}
         </p>

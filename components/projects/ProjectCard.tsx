@@ -10,13 +10,40 @@ const STATUS_LABEL: Record<Project["status"], string> = {
   concept: "Concept",
 };
 
-/** Case file card (spec §20). */
+/** Case file card with optional cover image preview */
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="panel panel--hud card">
+    <article className="panel panel--hud card" style={{ overflow: "hidden" }}>
+      {project.cover?.src && (
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "180px",
+            marginBottom: "1rem",
+            borderRadius: "4px",
+            overflow: "hidden",
+            background: "rgba(0,0,0,0.4)",
+            border: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={project.cover.src}
+            alt={project.cover.alt || project.title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "transform 0.4s ease",
+            }}
+          />
+        </div>
+      )}
+
       <header style={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}>
-        <p className="card__num">Case file #{project.caseNumber}</p>
-        <p className="meta" style={{ margin: 0 }}>{STATUS_LABEL[project.status]}</p>
+        <p className="card__num">Case file #{project.caseNumber || "00"}</p>
+        <p className="meta" style={{ margin: 0 }}>{STATUS_LABEL[project.status] || project.status}</p>
       </header>
 
       <h3 className="card__title">

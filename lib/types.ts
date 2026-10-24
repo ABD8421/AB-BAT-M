@@ -83,6 +83,7 @@ export interface Education {
   cgpa?: string;
   coursework: string[];
   highlights: string[];
+  imageUrl?: string;
   placeholder?: boolean;
 }
 
@@ -93,6 +94,7 @@ export interface Certificate {
   issued: string;
   credentialId?: string;
   verifyUrl?: string;
+  imageUrl?: string;
   placeholder?: boolean;
 }
 
@@ -101,7 +103,37 @@ export interface Achievement {
   title: string;
   detail: string;
   year: string;
+  imageUrl?: string;
   placeholder?: boolean;
+}
+
+export interface DynamicSection {
+  id: string;
+  label: string;
+  enabled: boolean;
+  order: number;
+  isCustom?: boolean;
+  customTitle?: string;
+  customSubtitle?: string;
+  customContent?: string;
+  badge?: string;
+}
+
+export interface InquiryMessage {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  createdAt: string;
+  read: boolean;
+}
+
+export interface UserSession {
+  email: string;
+  name?: string;
+  avatar?: string;
+  role: "superadmin" | "user";
 }
 
 export interface Service {

@@ -2,12 +2,11 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
+import { getProjects } from "@/lib/db";
 
-/**
- * `useSearchParams` needs a Suspense boundary so the rest of the page can still
- * be statically rendered (spec §45).
- */
 export function ProjectsSection() {
+  const projects = getProjects();
+
   return (
     <Section
       id="projects"
@@ -17,7 +16,7 @@ export function ProjectsSection() {
       lede="Each case file opens into a full write-up: the problem, the architecture, the decisions and what actually happened."
     >
       <Suspense fallback={<p className="meta">Loading case files…</p>}>
-        <ProjectGrid basePath="/" />
+        <ProjectGrid basePath="/" items={projects} />
       </Suspense>
 
       <p style={{ marginTop: "var(--space-3)" }}>

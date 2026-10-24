@@ -3,8 +3,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { ProjectCard } from "@/components/projects/ProjectCard";
-import { projectFilters, projects } from "@/data/projects";
-import type { ProjectCategory } from "@/lib/types";
+import { projectFilters, projects as defaultProjects } from "@/data/projects";
+import type { Project, ProjectCategory } from "@/lib/types";
 
 type Filter = ProjectCategory | "all";
 
@@ -14,20 +14,24 @@ function isFilter(value: string | null): value is Filter {
 
 /**
  * Filtering (spec §21).
- *
- * State lives in the URL (`?filter=web`) rather than component state, so a
- * filtered view is shareable and survives a refresh. `router.replace` with
- * `scroll: false` updates the URL without a navigation or a jump — no reload.
  */
-export function ProjectGrid({ basePath = "/projects" }: { basePath?: string }) {
+export function ProjectGrid({
+  basePath = "/projects",
+  items,
+}: {
+  basePath?: string;
+  items?: Project[];
+}) {
   const router = useRouter();
   const params = useSearchParams();
   const raw = params.get("filter");
   const active: Filter = isFilter(raw) ? raw : "all";
 
+  const allProjects = items && items.length > 0 ? items : defaultProjects;
+
   const visible = useMemo(
-    () => (active === "all" ? projects : projects.filter((project) => project.category === active)),
-    [active],
+    () => (active === "all" ? allProjects : allProjects.filter((project) => project.category === active)),
+    [active, allProjects],
   );
 
   function select(filter: Filter) {

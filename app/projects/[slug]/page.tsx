@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProject, getRelatedProjects, projects } from "@/data/projects";
+import { getProjectBySlug } from "@/lib/db";
 import { Unverified } from "@/components/ui/Unverified";
 import { externalLinkProps } from "@/lib/utils";
 import { site } from "@/data/site";
@@ -10,21 +11,15 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-/**
- * Static generation for every case file (spec §22, §45).
- * `generateStaticParams` pre-renders each slug at build time, so a case study
- * is served as static HTML. `dynamicParams = false` means an unknown slug is a
- * clean 404 rather than an on-demand render.
- */
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = getProjectBySlug(slug) ?? getProject(slug);
   if (!project) return { title: "Case file not found" };
 
   return {
@@ -42,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CaseStudyPage({ params }: PageProps) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = getProjectBySlug(slug) ?? getProject(slug);
   if (!project) notFound();
 
   const related = getRelatedProjects(slug);

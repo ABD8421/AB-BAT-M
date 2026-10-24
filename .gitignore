@@ -30,3 +30,5 @@ secrets/
 .vercel
 *.tsbuildinfo
 coverage/
+public/uploads/*
+!public/uploads/.gitkeep

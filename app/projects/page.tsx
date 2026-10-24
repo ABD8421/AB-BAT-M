@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
+import { getProjects } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Case files",
@@ -8,7 +9,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/projects" },
 };
 
+export const dynamic = "force-dynamic";
+
 export default function ProjectsPage() {
+  const projects = getProjects();
+
   return (
     <div className="shell" style={{ paddingTop: "8rem", paddingBottom: "var(--space-6)" }}>
       <header className="section__head">
@@ -22,7 +27,7 @@ export default function ProjectsPage() {
       </header>
 
       <Suspense fallback={<p className="meta">Loading case files…</p>}>
-        <ProjectGrid basePath="/projects" />
+        <ProjectGrid basePath="/projects" items={projects} />
       </Suspense>
     </div>
   );
